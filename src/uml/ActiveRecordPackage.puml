@@ -1,0 +1,35 @@
+@startuml
+
+class Tache {
+    + {static} create(nom, desc, dateEcheance, tempsNecessaire) : Tache
+    + {static} read(numTache) : Tache
+    + update()
+    + delete()
+}
+
+/'
+####################
+PATRON ACTIVE RECORD
+####################
+'/
+package ActiveRecord {
+
+    class DBConnection {
+        - {static} instance
+        - connection
+        - username
+        - password
+        - serverName
+        - portNumber
+        - dbName
+        - DBConnection(username, password, serverName, portNumber, dbName)
+        + {static} getInstance()
+        + getConnection()
+        + setNomDB(nomDB)
+    }
+
+    Tache ..> DBConnection : use
+
+}
+
+@enduml

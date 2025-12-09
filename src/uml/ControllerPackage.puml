@@ -1,0 +1,49 @@
+@startuml
+
+class Modele
+
+package Controleur {
+
+    interface EventHandler<ActionEvent> {
+        + {abstract} handle(ActionEvent event)
+    }
+
+    class ControlBtnAddTache {
+        + handle(ActionEvent event)
+    }
+
+    class ControlBtnSupprTache {
+        + handle(ActionEvent event)
+    }
+
+    class ControlBtnGanttOptions {
+        + handle(ActionEvent event)
+    }
+
+    class ControlBtnArchives {
+        + handle(ActionEvent event)
+    }
+
+    class ControlBtnGanttGenerer {
+        + handle(ActionEvent event)
+    }
+
+    /'
+    ###########
+    DEPENDANCES
+    ###########
+    '/
+    EventHandler <|.. ControlBtnAddTache
+    EventHandler <|.. ControlBtnSupprTache
+    EventHandler <|.. ControlBtnGanttOptions
+    EventHandler <|.. ControlBtnArchives
+    EventHandler <|.. ControlBtnGanttGenerer
+    ControlBtnAddTache "*" <-- "1" Modele : - modele
+    ControlBtnSupprTache "*" <-- "1" Modele : - modele
+    ControlBtnGanttOptions "*" <-- "1" Modele : - modele
+    ControlBtnArchives "*" <-- "1" Modele : - modele
+    ControlBtnGanttGenerer "*" <-- "1" Modele : - modele
+
+}
+
+@enduml

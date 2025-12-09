@@ -1,0 +1,71 @@
+@startuml
+
+package Modèle {
+
+    interface Sujet {
+        + {abstract} ajouterObservateur(Observateur)
+        + {abstract} retirerObservateur(Observateur)
+        + {abstract} notifierObservateurs()
+    }
+
+    class Modele {
+        + ajouterObservateur(Observateur)
+        + retirerObservateur(Observateur)
+        + notifierObservateurs()
+        + ajouterColonne(Colonne)
+    }
+
+    class Colonne {
+        - nomColonne
+    }
+
+    class FabriqueTache {
+        + creerTache(nom, description, dateEcheance, tempsNecessaire) : Tache
+        + creerSousTache(nom, description) : Tache
+    }
+
+    abstract class Tache {
+        - numTache
+        - nom
+        - description
+    }
+
+    class TachePrimaire {
+        - dateEcheance
+        - tempsNecessaire
+        - archive : [VRAI/FAUX]
+        + archiverTache()
+        + {static} create(nom, desc, dateEcheance, tempsNecessaire) : Tache
+        + {static} read(numTache) : Tache
+        + update()
+        + delete()
+    }
+
+    class SousTache {
+
+    }
+
+    class Couleur {
+        - couleurPrimaire
+        - couleurSecondaire
+    }
+
+    /'
+    ###########
+    DEPENDANCES
+    ###########
+    '/
+    Sujet <|.. Modele
+    Modele "*" -> "1" Colonne : - colonnes
+    Colonne "*" --> "1" Couleur : - couleur
+    Colonne "*" --> "1" Tache : - taches
+    TachePrimaire "*" --> "*" SousTache : - sousTaches
+    TachePrimaire "*" -> "*" TachePrimaire : - dependances
+    FabriqueTache ..> TachePrimaire : create
+    FabriqueTache ..> SousTache : create
+    Tache <|-- TachePrimaire
+    Tache <|-- SousTache
+
+}
+
+@enduml

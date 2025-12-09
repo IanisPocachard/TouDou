@@ -1,0 +1,43 @@
+@startuml
+
+class Modele
+
+package Vue {
+
+    interface Observateur {
+        + {abstract} actualiser(Sujet)
+    }
+
+    class VueBureau {
+        + actualiser(Sujet)
+    }
+
+    class VueListe {
+        + actualiser(Sujet)
+    }
+
+    class VueGantt {
+        + actualiser(Sujet)
+    }
+
+    class VueHistorique {
+        + actualiser(Sujet)
+    }
+
+    /'
+    ###########
+    DEPENDANCES
+    ###########
+    '/
+    Observateur <|.. VueBureau
+    Observateur <|.. VueListe
+    Observateur <|.. VueGantt
+    Observateur <|.. VueHistorique
+    VueBureau "*" <-- "1" Modele : - modele
+    VueListe "*" <-- "1" Modele : - modele
+    VueGantt "*" <-- "1" Modele : - modele
+    VueHistorique "*" <-- "1" Modele : - modele
+
+}
+
+@enduml
