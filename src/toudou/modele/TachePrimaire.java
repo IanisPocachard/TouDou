@@ -1,6 +1,8 @@
+package modele;
+
 import java.util.Date;
 
-public class TachePrimaire extends Tache{
+public class TachePrimaire extends Tache {
     private Date dateDebut;
     private Date dateEcheance;
     private boolean archivee;
