@@ -5,11 +5,13 @@ public class Tache {
     private String nom;
     private String description;
     private int numTache;
+    private int duree;
 
-    public Tache(String nom, String description, int numTache) {
+    public Tache(String nom, String description, int numTache, int duree) {
         this.nom = nom;
         this.description = description;
         this.numTache = numTache;
+        this.duree = duree;
     }
 
     /**
@@ -34,6 +36,16 @@ public class Tache {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Retourne sous format texte une tâche
+     * @return res : état de la tâche
+     */
+    public String toString(){
+        String res="Nom de la tache : "+nom+ '\n' + "Description de la  tache : "+description+ '\n' + "Durée de la tache : "+ duree +
+                '\n';
+        return res;
     }
 
 }
