@@ -10,19 +10,28 @@ public class Tache {
         this.numTache = numTache;
     }
 
+    /**
+     * renvoie le numéro de la tache
+     * @return numTache
+     */
     public int getNumTache() {
         return numTache;
     }
 
+    /**
+     * renvoie le nom de la tache
+     * @return nom
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * renvoie la description de la tache
+     * @return description
+     */
     public String getDescription() {
         return description;
     }
 
-    public static int getCompteur() {
-        return compteur;
-    }
 }
