@@ -7,11 +7,12 @@ public class Tache {
     private int numTache;
     private int duree;
 
-    public Tache(String nom, String description, int numTache) throws Exception {
+    public Tache(String nom, String description, int numTache,int duree) throws Exception {
         if ((nom instanceof String) && (description instanceof String) && (numTache > 0)) {
             this.nom = nom;
             this.description = description;
             this.numTache = numTache;
+            this.duree = duree;
         } else {
             throw new Exception("Vous tenez de créer une nouvelle tâche avec des mauvais paramètres !");
         }

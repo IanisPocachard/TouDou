@@ -11,7 +11,7 @@ public class TachePrimaire extends Tache {
     //Partie composite
     private List<Tache> dependances;
 
-    public TachePrimaire(String nom, String description, int numTache, int duree, Date dateDebut, Date dateEcheance) {
+    public TachePrimaire(String nom, String description, int numTache, int duree, Date dateDebut, Date dateEcheance) throws Exception{
         super(nom, description, numTache, duree);
         this.dateDebut = dateDebut;
         this.dateEcheance = dateEcheance;
