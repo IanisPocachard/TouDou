@@ -42,10 +42,14 @@ public class Tache {
      * Retourne sous format texte une tâche
      * @return res : état de la tâche
      */
-    public String toString(){
-        String res="Nom de la tache : "+nom+ '\n' + "Description de la  tache : "+description+ '\n' + "Durée de la tache : "+ duree +
+    public String toString(int indent){
+        String res="\t".repeat(indent)+ "Nom de la tache : "+nom+ '\n' + "\t".repeat(indent) + "Description de la  tache : "+description+ '\n' + "\t".repeat(indent) + "Durée de la tache : "+ duree +
                 '\n';
         return res;
+    }
+
+    public String toString(){
+        return this.toString(0);
     }
 
 }
