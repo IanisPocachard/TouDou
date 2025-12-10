@@ -1,0 +1,8 @@
+Fonctionnalités :
+- Implémentation de la sérialisation
+- Mise en place du modèle de l'application
+- Implémentation de la création de tâches
+- Tests
+
+Cas d'utilisations :
+-
