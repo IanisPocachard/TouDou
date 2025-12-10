@@ -1,5 +1,5 @@
 .idea
-.tmp
-.class
-.iml
-.xml
+*.tmp
+*.class
+*.iml
+*.xml
