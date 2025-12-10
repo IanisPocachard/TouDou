@@ -46,7 +46,22 @@ public class TachePrimaire extends Tache {
         return archivee;
     }
 
-    public String toString() {
-        String res = super.toString();
+    public String toString(){
+        return this.toString(0);
+    }
+
+    @Override
+    public String toString(int indent) {
+        String res = super.toString(indent);
+
+        if(!this.dependances.isEmpty()){
+            res+= "\t".repeat(indent) + "Dépendances : " + '\n';
+        }
+
+        for (Tache t : dependances) {
+            res += t.toString(indent + 1);
+        }
+
+        return res;
     }
 }
