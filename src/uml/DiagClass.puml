@@ -38,20 +38,22 @@ title Diagramme de classe global - TouDou
         + toString(int): String
     }
 
-    class TacheSerializer{
-        - chemin : String
-        - instance : TacheSerializer
+    package Singleton {
+        class TacheSerializer{
+            - chemin : String
+            - instance : TacheSerializer
 
-        + ecrireFichier(List<Tache>); void
-        + lireFichier(): List<Tache>
+            + ecrireFichier(List<Tache>); void
+            + lireFichier(): List<Tache>
+        }
     }
 
     interface Manager{
-        + create(Tache): void
-        + read(int): Tache
-        + readAll(): List<Tache>
-        + update(int, String, String, int): boolean
-        + delete(int): boolean
+        + {abstract} create(Tache): void
+        + {abstract} read(int): Tache
+        + {abstract} readAll(): List<Tache>
+        + {abstract} update(int, String, String, int): boolean
+        + {abstract} delete(int): boolean
     }
 
     class TacheManager implements Manager{
@@ -63,6 +65,10 @@ title Diagramme de classe global - TouDou
         + update(int, String, String, int): boolean
         + delete(int): boolean
     }
+
+    FabriqueTache ..> Tache : create
+    TacheSerializer ..> Tache : use
+    TacheManager .> TacheSerializer : use
 
 
 @enduml
