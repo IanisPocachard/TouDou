@@ -2,7 +2,7 @@ package modele;
 
 import java.io.Serializable;
 
-public class Tache implements Serializable {
+public abstract class Tache implements Serializable {
 
     private String nom;
     private String description;
@@ -58,5 +58,7 @@ public class Tache implements Serializable {
     public String toString(){
         return this.toString(0);
     }
+
+    public abstract boolean getValide();
 
 }
