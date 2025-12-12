@@ -1,29 +1,24 @@
 package modele;
 
-public class Tache {
+import java.io.Serializable;
+
+public class Tache implements Serializable {
 
     private String nom;
     private String description;
-    private int numTache;
     private int duree;
 
-    public Tache(String nom, String description, int numTache,int duree) throws Exception {
-        if ((nom instanceof String) && (description instanceof String) && (numTache > 0)) {
+    // Pour éviter les problèmes de sérialisation
+    private static final long serialVersionUID = 1L;
+
+    public Tache(String nom, String description, int duree) throws Exception {
+        if ((nom instanceof String) && (description instanceof String)) {
             this.nom = nom;
             this.description = description;
-            this.numTache = numTache;
             this.duree = duree;
         } else {
             throw new Exception("Vous tenez de créer une nouvelle tâche avec des mauvais paramètres !");
         }
-    }
-
-    /**
-     * renvoie le numéro de la tache
-     * @return numTache
-     */
-    public int getNumTache() {
-        return numTache;
     }
 
     /**
