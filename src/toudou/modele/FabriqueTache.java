@@ -4,7 +4,10 @@ import java.util.Date;
 
 public class FabriqueTache {
 
-    public Tache creerTache(String nom, String description, Date dateEcheance, int tempsNecessaire) throws Exception {
-        return new Tache(nom, description, dateEcheance, tempsNecessaire);
+    public Tache creerTache(String nom, String description, int duree, Date dateDebut,
+                            Date dateEcheance) throws Exception {
+        return new TachePrimaire(nom, description, duree, dateDebut, dateEcheance);
     }
+
+    
 }
