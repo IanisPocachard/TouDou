@@ -8,6 +8,13 @@ public class TachePrimaire extends Tache {
     private Date dateDebut;
     private Date dateEcheance;
     private boolean archivee;
+    private int etat;
+
+    public static final int EN_COURS=1;
+    public static final int TERMINEE=2;
+    public static final int A_FAIRE=3;
+    public static final int EN_ATTENTE=4;
+
     //Partie composite
     private List<Tache> dependances;
 
@@ -67,5 +74,13 @@ public class TachePrimaire extends Tache {
         }
 
         return res;
+    }
+
+    public void setEtat(int etat) throws Exception {
+        if (etat > 4 && etat < 1) {
+            throw new Exception("Etat invalide");
+        } else {
+            this.etat = etat;
+        }
     }
 }
