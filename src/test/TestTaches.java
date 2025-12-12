@@ -1,12 +1,17 @@
 import modele.SousTache;
 import modele.Tache;
 import modele.TachePrimaire;
+import modele.TacheSerializer;
 import org.junit.Test;
+import java.io.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TestTaches {
 
@@ -47,6 +52,32 @@ public class TestTaches {
         SousTache st = new SousTache("Sous tache 1", "Test dépendance", 2);
         t.ajoutDependance(st);
         assertEquals("La liste de dépendance n'est pas correctement initialisée", t.getDependances().size(), 1);
+    }
+
+    @Test
+    public void test_05_TacheSerializer_ecrirePuisLire() throws Exception {
+        String chemin = "src/toudou/taches.toudou";
+        File f = new File(chemin);
+
+        if (f.getParentFile() != null && !f.getParentFile().exists()) {
+            f.getParentFile().mkdirs();
+        }
+
+        if (f.exists()) f.delete();
+        assertNull(TacheSerializer.lireFichier(), "Si le fichier n'existe pas, lireFichier doit retourner null");
+
+        // 2) écrire puis relire
+        List<Tache> taches = new ArrayList<>();
+        taches.add(new Tache("T1", "Desc 1", 2));
+        taches.add(new Tache("T2", "Desc 2", 5));
+
+        TacheSerializer.ecrireFichier(taches);
+
+        List<Tache> relu = TacheSerializer.lireFichier();
+        assertNotNull(relu,"La liste relue ne doit pas être null");
+        assertEquals("La taille doit être 2", 2, relu.size());
+        assertEquals("Nom T1 incorrect", "T1", relu.get(0).getNom());
+        assertEquals("Nom T2 incorrect", "T2", relu.get(1).getNom());
     }
 
 }
