@@ -46,7 +46,23 @@ title Diagramme de classe global - TouDou
         + lireFichier(): List<Tache>
     }
 
-    
+    interface Manager{
+        + create(Tache): void
+        + read(int): Tache
+        + readAll(): List<Tache>
+        + update(int, String, String, int): boolean
+        + delete(int): boolean
+    }
+
+    class TacheManager implements Manager{
+        - List<Tache>
+        - sauvegarder(): void
+        + create(Tache): void
+        + read(int): Tache
+        + readAll(): List<Tache>
+        + update(int, String, String, int): boolean
+        + delete(int): boolean
+    }
 
 
 @enduml
