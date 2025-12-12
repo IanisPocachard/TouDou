@@ -10,10 +10,10 @@ public class TachePrimaire extends Tache {
     private boolean archivee;
     private int etat;
 
-    public static final int EN_COURS=1;
-    public static final int TERMINEE=2;
-    public static final int A_FAIRE=3;
-    public static final int EN_ATTENTE=4;
+    public static final int A_FAIRE=1;
+    public static final int EN_COURS=2;
+    public static final int A_TESTER=3;
+    public static final int VALIDEE=4;
 
     //Partie composite
     private List<Tache> dependances;
@@ -24,10 +24,12 @@ public class TachePrimaire extends Tache {
         this.dateEcheance = dateEcheance;
         this.archivee = false;
         this.dependances = new ArrayList<Tache>();
+        this.etat=A_FAIRE;
     }
 
     public void ajoutDependance(Tache tache) {
-        this.dependances.add(tache);
+        if (tache == this) throw new IllegalArgumentException("Une tâche ne peut dépendre d'elle-même.");
+        if (!dependances.contains(tache)) dependances.add(tache);
     }
     /**
      * recupere la date de debut de la tâche
@@ -76,11 +78,26 @@ public class TachePrimaire extends Tache {
         return res;
     }
 
-    public void setEtat(int etat) throws Exception {
-        if (etat > 4 && etat < 1) {
+    public void setEtat(int netat) throws Exception {
+        if (netat < 1 || netat > 4) {
             throw new Exception("Etat invalide");
-        } else {
-            this.etat = etat;
         }
+        if (netat == VALIDEE) {
+            // vérifier que toutes les dépendances sont validées
+            for (Tache t : dependances) {
+                if (!t.getValide()) {
+                    throw new Exception("Impossible de valider : une dépendance n'est pas validée.");
+                }
+            }
+        }
+        this.etat = netat;
+    }
+
+    public int getEtat(){
+        return this.etat;
+    }
+
+    public boolean getValide(){
+            return this.etat == TachePrimaire.VALIDEE;
     }
 }
