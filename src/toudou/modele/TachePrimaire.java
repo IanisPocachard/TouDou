@@ -38,6 +38,10 @@ public class TachePrimaire extends Tache {
         return dateEcheance;
     }
 
+    public List<Tache> getDependances() {
+        return dependances;
+    }
+
     /**
      * retourne vrai si la tache est archivée
      * @return archivee

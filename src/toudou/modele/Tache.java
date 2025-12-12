@@ -38,6 +38,12 @@ public class Tache implements Serializable {
     }
 
     /**
+     * renvoie la durée de la tâche
+     * @return duree
+     */
+    public int getDuree(){return duree;}
+
+    /**
      * Retourne sous format texte une tâche
      * @return res : état de la tâche
      */
