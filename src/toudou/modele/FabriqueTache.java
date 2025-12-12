@@ -9,5 +9,7 @@ public class FabriqueTache {
         return new TachePrimaire(nom, description, duree, dateDebut, dateEcheance);
     }
 
-    
+    public Tache creerSousTache(String nom, String description, int duree) throws Exception {
+        return new SousTache(nom, description, duree);
+    }
 }
