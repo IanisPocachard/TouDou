@@ -1,6 +1,7 @@
 package modele.manager;
 
 import modele.Tache;
+import modele.TacheSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class TacheManager implements Manager {
 
     public TacheManager() {
         try {
-            List<Tache> temp = new ArrayList<Tache>();
+            List<Tache> temp = TacheSerializer.lireFichier();
             if (temp == null) {
                 taches = new ArrayList();
             } else {
@@ -21,6 +22,77 @@ public class TacheManager implements Manager {
             e.printStackTrace();
             taches = new ArrayList();
         }
+    }
+
+    // ###################
+    // ### PERSISTENCE ###
+    // ###################
+    private void sauvegarder() {
+        try {
+            TacheSerializer.ecrireFichier(taches);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ##############
+    // ### CREATE ###
+    // ##############
+    @Override
+    public void create(Tache tache) {
+        taches.add(tache);
+        sauvegarder();
+    }
+
+    // ############
+    // ### READ ###
+    // ############
+    @Override
+    public Tache read(int index) {
+        if (index < 0 || index >= taches.size()) {
+            return null;
+        }
+        return taches.get(index);
+    }
+
+    @Override
+    public List<Tache> readAll() {
+        return taches;
+    }
+
+    // ##############
+    // ### UPDATE ###
+    // ##############
+    @Override
+    public boolean update(int index, String nom, String description, int duree) {
+        if (index < 0 || index >= taches.size()) {
+            return false;
+        }
+
+        try {
+            Tache nouvelle = new Tache(nom, description, duree);
+            taches.set(index, nouvelle);
+
+            sauvegarder();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // ##############
+    // ### DELETE ###
+    // ##############
+    @Override
+    public boolean delete(int index) {
+        if (index < 0 || index >= taches.size()) {
+            return false;
+        }
+
+        taches.remove(index);
+        sauvegarder();
+        return true;
     }
 
 }
