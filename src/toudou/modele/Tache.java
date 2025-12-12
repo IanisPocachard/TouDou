@@ -8,6 +8,8 @@ public class Tache implements Serializable {
     private String description;
     private int duree;
 
+
+
     // Pour éviter les problèmes de sérialisation
     private static final long serialVersionUID = 1L;
 
