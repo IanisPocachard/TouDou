@@ -29,7 +29,7 @@ activate Primaire
 
             Enfant --> Primaire : description_enfant
             deactivate Enfant
-            
+
         end
 
     Primaire --> Primaire
