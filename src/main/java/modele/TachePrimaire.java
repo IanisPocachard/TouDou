@@ -99,4 +99,12 @@ public class TachePrimaire extends Tache {
     public boolean getValide(){
             return this.etat == TachePrimaire.VALIDEE;
     }
+
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public void setDateEcheance(Date dateEcheance) {
+        this.dateEcheance = dateEcheance;
+    }
 }
