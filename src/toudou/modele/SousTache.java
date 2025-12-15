@@ -1,0 +1,7 @@
+package modele;
+
+public class SousTache extends Tache {
+    public SousTache(String nom, String description, int duree) throws Exception {
+        super(nom, description, duree);
+    }
+}

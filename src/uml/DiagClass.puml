@@ -2,211 +2,73 @@
 
 title Diagramme de classe global - TouDou
 
-/'
-#########################
-PATRON D'ARCHITECTURE MVC
-#########################
-'/
-
-package Modèle {
-
-    interface Sujet {
-        + {abstract} ajouterObservateur(Observateur)
-        + {abstract} retirerObservateur(Observateur)
-        + {abstract} notifierObservateurs()
-    }
-
-    class Modele {
-        + ajouterObservateur(Observateur)
-        + retirerObservateur(Observateur)
-        + notifierObservateurs()
-        + ajouterColonne(Colonne)
-    }
-
-    class Colonne {
-        - nomColonne
-    }
-
     class FabriqueTache {
-        + creerTache(nom, description, dateEcheance, tempsNecessaire) : Tache
-        + creerSousTache(nom, description) : Tache
+        + creerTache(nom, description, duree, dateDebut) : Tache
+        + creerSousTache(nom, description, duree) : Tache
     }
 
-    class Tache {
-        - numTache
-        - nom
-        - description
-        - dateEcheance
-        - tempsNecessaire
-        - archive : [VRAI/FAUX]
-        + archiverTache()
-        + {static} create(nom, desc, dateEcheance, tempsNecessaire) : Tache
-        + {static} read(numTache) : Tache
-        + update()
-        + delete()
+    class Tache implements Serializable{
+        - nom : String
+        - description : String
+        - duree : int
+        - serialVersionUID : long
+
+        + getNom(): String
+        + getDescription(): String
+        + getDuree(): int
+        + toString(int): String
+        + toString(): String
     }
 
-    class SousTache {
-        - numSousTache
-        - nom
-        - description
+    class SousTache extends Tache{
     }
 
-    class Couleur {
-        - couleurPrimaire
-        - couleurSecondaire
+    class TachePrimaire extends Tache{
+        - dateDebut : Date
+        - dateEcheance : Date
+        - archivee : boolean
+        - dependances : List<Tache>
+
+        + ajoutDependance(Tache): void
+        + getDateDebut(): Date
+        + getDateEcheance(): Date
+        + getDependances(): List<Tache>
+        + isArchivee(): boolean
+        + toString(): String
+        + toString(int): String
     }
 
-    /'
-    ###########
-    DEPENDANCES
-    ###########
-    '/
-    Sujet <|.. Modele
-    Modele "*" -> "1" Colonne : - colonnes
-    Colonne "*" --> "1" Couleur : - couleur
-    Colonne "*" --> "1" Tache : - taches
-    Tache "*" --> "*" SousTache : - sousTaches
-    Tache "*" -> "*" Tache : - dependances
-    FabriqueTache ..> Tache : create
-    FabriqueTache ..> SousTache : create
+    package Singleton {
+        class TacheSerializer{
+            - chemin : String
+            - instance : TacheSerializer
 
-    /'
-    ####################
-    PATRON ACTIVE RECORD
-    ####################
-    '/
-    package ActiveRecord {
-
-        class DBConnection {
-            - {static} instance
-            - connection
-            - username
-            - password
-            - serverName
-            - portNumber
-            - dbName
-            - DBConnection(username, password, serverName, portNumber, dbName)
-            + {static} getInstance()
-            + getConnection()
-            + setNomDB(nomDB)
+            + ecrireFichier(List<Tache>); void
+            + lireFichier(): List<Tache>
         }
-
     }
 
-
-    Tache ..> DBConnection : use
-
-}
-
-package Vue {
-
-    interface Observateur {
-        + {abstract} actualiser(Sujet)
+    interface Manager{
+        + {abstract} create(Tache): void
+        + {abstract} read(int): Tache
+        + {abstract} readAll(): List<Tache>
+        + {abstract} update(int, String, String, int): boolean
+        + {abstract} delete(int): boolean
     }
 
-    class VueBureau {
-        + actualiser(Sujet)
+    class TacheManager implements Manager{
+        - List<Tache>
+        - sauvegarder(): void
+        + create(Tache): void
+        + read(int): Tache
+        + readAll(): List<Tache>
+        + update(int, String, String, int): boolean
+        + delete(int): boolean
     }
 
-    class VueListe {
-        + actualiser(Sujet)
-    }
+    FabriqueTache ..> Tache : create
+    TacheSerializer ..> Tache : use
+    TacheManager .> TacheSerializer : use
 
-    class VueGantt {
-        + actualiser(Sujet)
-    }
-
-    class VueHistorique {
-        + actualiser(Sujet)
-    }
-
-    /'
-    ###########
-    DEPENDANCES
-    ###########
-    '/
-    Observateur <|.. VueBureau
-    Observateur <|.. VueListe
-    Observateur <|.. VueGantt
-    Observateur <|.. VueHistorique
-    VueBureau "*" <-- "1" Modele : - modele
-    VueListe "*" <-- "1" Modele : - modele
-    VueGantt "*" <-- "1" Modele : - modele
-    VueHistorique "*" <-- "1" Modele : - modele
-
-}
-
-package Controlleur {
-
-    interface EventHandler<ActionEvent> {
-        + {abstract} handle(ActionEvent event)
-    }
-
-    class ControlBtnAddTache {
-        + handle(ActionEvent event)
-    }
-
-    class ControlBtnSupprTache {
-        + handle(ActionEvent event)
-    }
-
-    class ControlBtnGanttOptions {
-        + handle(ActionEvent event)
-    }
-
-    class ControlBtnArchives {
-        + handle(ActionEvent event)
-    }
-
-    class ControlBtnGanttGenerer {
-        + handle(ActionEvent event)
-    }
-
-    /'
-    ###########
-    DEPENDANCES
-    ###########
-    '/
-    EventHandler <|.. ControlBtnAddTache
-    EventHandler <|.. ControlBtnSupprTache
-    EventHandler <|.. ControlBtnGanttOptions
-    EventHandler <|.. ControlBtnArchives
-    EventHandler <|.. ControlBtnGanttGenerer
-    ControlBtnAddTache "*" <-- "1" Modele : - modele
-    ControlBtnSupprTache "*" <-- "1" Modele : - modele
-    ControlBtnGanttOptions "*" <-- "1" Modele : - modele
-    ControlBtnArchives "*" <-- "1" Modele : - modele
-    ControlBtnGanttGenerer "*" <-- "1" Modele : - modele
-
-}
-
-
-
-/'
-##########################
-DEPENDANCES ENTRE PACKAGES
-##########################
-'/
-Modele "*" --> "*" Observateur : - observateurs
-
-
-
-
-
-/'
-###########################
-TOUS LES PATRONS UTILISES :
-###########################
-
-- MVC : identifié par package
-- Active Record : accès à BDD, CRUD -> Create, Read, Update, Delete
-
-- Observateur : en lien avec MVC
-- Composite : gestion des tâches dépendantes
-- Fabrique : création de tâches et de sous-tâches
-- Singleton : pour avoir une unique instance du driver de BDD
-
-'/
 
 @enduml

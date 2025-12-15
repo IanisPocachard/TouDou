@@ -1,0 +1,39 @@
+@startuml
+hide footbox
+title Séquence : Création d'une TachePrimaire via Fabrique
+
+actor Client
+participant "f : FabriqueTache" as Fabrique
+participant "t : TachePrimaire" as Primaire
+participant "Tache (Super)" as Mere
+
+Client -> Fabrique : creerTache(nom, description, duree, dateDebut, dateEcheance)
+activate Fabrique
+
+create Primaire
+Fabrique -> Primaire : new TachePrimaire(nom, description, duree, dateDebut, dateEcheance)
+activate Primaire
+
+    Primaire -> Mere : super(nom, desc, duree)
+    activate Mere
+
+        Mere -> Mere : Vérification (instanceof String)
+        alt Paramètres valides
+            Mere -> Mere : this.nom = nom\nthis.description = descri
+        else Paramètres invalides
+            Mere --> Primaire : throw Exception
+        end
+
+    Mere --> Primaire
+    deactivate Mere
+
+    Primaire -> Primaire : this.dateDebut = dateDebut\nthis.dateEcheance = dateEcheance
+    Primaire -> Primaire : dependances = new ArrayList()
+
+Primaire --> Fabrique : t
+deactivate Primaire
+
+Fabrique --> Client : t
+deactivate Fabrique
+
+@enduml

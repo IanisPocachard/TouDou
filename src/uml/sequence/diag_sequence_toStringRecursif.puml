@@ -1,0 +1,41 @@
+@startuml
+hide footbox
+title Séquence : Affichage (toString) récursif
+
+participant "Client" as Client
+participant "tP : TachePrimaire" as Primaire
+participant "Tache (Super)" as Mere
+participant "sousTache : SousTache" as Enfant
+
+Client -> Primaire : toString()
+activate Primaire
+
+    Primaire -> Primaire : toString(0)
+    activate Primaire
+
+        Primaire -> Mere : super.toString(0)
+        activate Mere
+        Mere --> Primaire : description_base
+        deactivate Mere
+
+        loop pour chaque t dans dependances
+            Primaire -> Enfant : toString(1)
+            activate Enfant
+
+            Enfant -> Mere : super.toString(1)
+            activate Mere
+            Mere --> Enfant : description_enfant
+            deactivate Mere
+
+            Enfant --> Primaire : description_enfant
+            deactivate Enfant
+
+        end
+
+    Primaire --> Primaire
+    deactivate Primaire
+
+Primaire --> Client
+deactivate Primaire
+
+@enduml
