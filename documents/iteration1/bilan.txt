@@ -1,0 +1,5 @@
+Bilan de l'itération 1 :
+
+Nous nous sommes focalisés sur le fonctionnement de l'application, et non pas sur l'interface graphique.
+Grâce à nos tests unitaires et à nos essais à la main, nous nous sommes assurés
+qu'il n'y a pas de bug.
