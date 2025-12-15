@@ -79,18 +79,17 @@ public class TachePrimaire extends Tache {
     }
 
     public void setEtat(int netat) throws Exception {
-        if (netat < 1 || netat > 4) {
-            throw new Exception("Etat invalide");
+        if (netat < 1 || netat > 4) { //si l'état n'es pas un état valide
+            throw new Exception("Etat invalide"); // on renvoie une erreur
         }
-        if (netat == VALIDEE) {
-            // vérifier que toutes les dépendances sont validées
-            for (Tache t : dependances) {
-                if (!t.getValide()) {
-                    throw new Exception("Impossible de valider : une dépendance n'est pas validée.");
+        if (netat == VALIDEE) { // si l'état est l'état VALIDEE
+            for (Tache t : dependances) { // on parcours les dépendances
+                if (!t.getValide()) { // si une dépendance n'est pas en état VALIDEE
+                    throw new Exception("Impossible de valider : une dépendance n'est pas validée.");// on renvoie une exception
                 }
             }
         }
-        this.etat = netat;
+        this.etat = netat; // on prend l'état passé en parametre
     }
 
     public int getEtat(){
