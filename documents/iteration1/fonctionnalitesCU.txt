@@ -1,8 +1,11 @@
 Fonctionnalités :
-- Implémentation de la sérialisation
-- Mise en place du modèle de l'application
-- Implémentation de la création de tâches
-- Tests
+- Implémentation de la sérialisation (Ianis)
+- Mise en place du modèle de l'application (Néo)
+- Implémentation de la création de tâches (Erdal)
+- Tests (Maxime)
 
 Cas d'utilisations :
--
+- Créer une tâche
+- Ajouter une sous-tâche
+- Modifier une tâche
+- Supprimer une tâche
