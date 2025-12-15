@@ -61,4 +61,11 @@ public abstract class Tache implements Serializable {
 
     public abstract boolean getValide();
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
