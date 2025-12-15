@@ -1,15 +1,41 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+hide footbox
+title Séquence : Affichage (toString) récursif
 
-autonumber
+participant "Client" as Client
+participant "tP : TachePrimaire" as Primaire
+participant "Tache (Super)" as Mere
+participant "sousTache : SousTache" as Enfant
 
-== Initialization ==
+Client -> Primaire : toString()
+activate Primaire
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+    Primaire -> Primaire : toString(0)
+    activate Primaire
 
-== Repetition ==
+        Primaire -> Mere : super.toString(0)
+        activate Mere
+        Mere --> Primaire : description_base
+        deactivate Mere
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+        loop pour chaque t dans dependances
+            Primaire -> Enfant : toString(1)
+            activate Enfant
+
+            Enfant -> Mere : super.toString(1)
+            activate Mere
+            Mere --> Enfant : description_enfant
+            deactivate Mere
+
+            Enfant --> Primaire : description_enfant
+            deactivate Enfant
+            
+        end
+
+    Primaire --> Primaire
+    deactivate Primaire
+
+Primaire --> Client
+deactivate Primaire
+
 @enduml
