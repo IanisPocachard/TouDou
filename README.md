@@ -3,7 +3,7 @@
 ## Membres du groupe
 BOULANGER Néo
 CINAR Erdal
-CRAINCOURT Noa
+CRAINCOURT Maxime
 POCACHARD Ianis
 
 ## Organisation des branches
