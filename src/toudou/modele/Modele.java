@@ -4,7 +4,7 @@ import vue.Observateur;
 
 import java.util.ArrayList;
 
-public class Modele extends Sujet {
+public class Modele implements Sujet {
 
     private ArrayList<Observateur> observateurs;
 
