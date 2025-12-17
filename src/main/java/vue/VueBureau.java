@@ -10,6 +10,7 @@ import modele.Modele;
 import modele.Sujet;
 import modele.Tache;
 import modele.TachePrimaire;
+import modele.manager.TacheManager;
 
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class VueBureau extends HBox implements Observateur {
         viderContenuColonne(colTesting);
         viderContenuColonne(colDone);
 
-        List<Tache> taches = m.readAll();
+        List<Tache> taches = m.getTaches();
         if (taches == null) return;
 
         for (Tache t : taches) {

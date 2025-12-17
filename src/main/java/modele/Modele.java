@@ -1,18 +1,21 @@
 package modele;
 
+import modele.manager.TacheManager;
 import vue.Observateur;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Modele implements Sujet {
 
     private ArrayList<Observateur> observateurs;
-
-    private ArrayList<Tache> taches;
+    private List<Tache> taches;
+    private TacheManager manager;
 
     public Modele() {
         this.observateurs = new ArrayList<>();
-        this.taches = new ArrayList<>();
+        this.manager = new TacheManager();
+        this.taches = manager.readAll();
     }
 
     @Override
@@ -32,7 +35,12 @@ public class Modele implements Sujet {
         }
     }
 
-    public ArrayList<Tache> readAll() {
+    public List<Tache> getTaches() {
+        taches = manager.readAll();
         return taches;
+    }
+
+    public Tache getTache(int index) {
+        return manager.read(index);
     }
 }

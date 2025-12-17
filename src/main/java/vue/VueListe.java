@@ -94,7 +94,7 @@ public class VueListe extends VBox implements Observateur {
             return;
         }
 
-        List<Tache> racines = m.readAll();
+        List<Tache> racines = m.getTaches();
 
         Platform.runLater(() -> {
             root.getChildren().clear();
