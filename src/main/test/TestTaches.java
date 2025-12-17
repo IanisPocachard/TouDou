@@ -2,7 +2,11 @@ import modele.SousTache;
 import modele.Tache;
 import modele.TachePrimaire;
 import modele.TacheSerializer;
+import modele.fabrique.FabriqueTache;
+import modele.fabrique.FabriqueTachePrimaire;
+import org.junit.Before;
 import org.junit.Test;
+
 import java.io.*;
 
 import java.util.ArrayList;
@@ -15,9 +19,16 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TestTaches {
 
+    private FabriqueTache fabrique;
+
+    @Before
+    public void setUp() {
+        this.fabrique = new FabriqueTachePrimaire();
+    }
+
     @Test
     public void test_01_Construction_normale_Tache() throws Exception {
-        Tache t = new Tache("Test Tache", "Test des tâches pour vérifier la construction normale",  10);
+        Tache t = fabrique.fab("Test Tache", "Test des tâches pour vérifier la construction normale",  10);
         assertNotNull(t, "L'objet Tache ne doit pas être null");
         assertEquals("Le nom n'est pas correctement initialisé", t.getNom(), "Test Tache");
         assertEquals("La description n'est pas correctement initialisée", t.getDescription(), "Test des tâches pour vérifier la construction normale");
@@ -68,8 +79,8 @@ public class TestTaches {
 
         // 2) écrire puis relire
         List<Tache> taches = new ArrayList<>();
-        taches.add(new Tache("T1", "Desc 1", 2));
-        taches.add(new Tache("T2", "Desc 2", 5));
+        taches.add(fabrique.fab("T1", "Desc 1", 2));
+        taches.add(fabrique.fab("T2", "Desc 2", 5));
 
         TacheSerializer.ecrireFichier(taches);
 

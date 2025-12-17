@@ -36,12 +36,18 @@ public class TacheSerializer {
     public static List<Tache> lireFichier() throws Exception {
         File f = new File(chemin);
 
-        if (!f.exists()) {
+        if (!f.exists() || f.length() == 0) {
             return null;
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(chemin))) {
             return (List<Tache>) ois.readObject();
+        } catch (EOFException e) {
+            // sécurité supplémentaire
+            return null;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
