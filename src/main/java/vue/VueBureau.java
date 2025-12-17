@@ -2,7 +2,6 @@ package vue;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -38,7 +37,6 @@ public class VueBureau extends HBox implements Observateur {
     }
 
     private void initialiserColonnes() {
-
         colToDo = creerColonne("TO DO", "#e6e6fa");
         colInProgress = creerColonne("IN PROGRESS", "#fffacd");
         colTesting = creerColonne("TESTING", "#ffdab9");
@@ -94,8 +92,6 @@ public class VueBureau extends HBox implements Observateur {
                         colInProgress.getChildren().add(carte);
                         break;
                     case TachePrimaire.A_TESTER:
-                        Node card;
-                        colTesting.getChildren().add(card);
                         colTesting.getChildren().add(carte);
                         break;
                     case TachePrimaire.VALIDEE:

@@ -32,4 +32,7 @@ public class Modele implements Sujet {
         }
     }
 
+    public ArrayList<Tache> readAll() {
+        return taches;
+    }
 }
