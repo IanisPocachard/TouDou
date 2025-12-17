@@ -8,15 +8,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import modele.Modele;
 import modele.SousTache;
 import modele.Sujet;
 import modele.Tache;
 import modele.TachePrimaire;
-import modele.manager.TacheManager;
 
-import java.util.*;
-
-import static javafx.application.Application.launch;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VueListe extends VBox implements Observateur {
 
@@ -67,6 +66,7 @@ public class VueListe extends VBox implements Observateur {
 
                 cell.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                     if (!cell.isEmpty() && cell.getItem() != null) {
+                        // click controller
                     }
                 });
 
@@ -90,15 +90,14 @@ public class VueListe extends VBox implements Observateur {
             return;
         }
 
-        if (!(s instanceof TacheManager tm)) {
+        if (!(s instanceof Modele m)) {
             return;
         }
 
-        List<Tache> racines = tm.readAll();
+        List<Tache> racines = m.readAll();
 
         Platform.runLater(() -> {
             root.getChildren().clear();
-
             if (racines == null || racines.isEmpty()) return;
 
             for (Tache t : racines) {
@@ -118,8 +117,8 @@ public class VueListe extends VBox implements Observateur {
 
     private List<Tache> getSousTaches(TachePrimaire tp) {
         List<Tache> listeSousTaches = new ArrayList<>();
-        for (int i=0; i<tp.getDependances().size(); i++){
-            if (tp.getDependances().get(i) instanceof SousTache){
+        for (int i = 0; i < tp.getDependances().size(); i++) {
+            if (tp.getDependances().get(i) instanceof SousTache) {
                 listeSousTaches.add(tp.getDependances().get(i));
             }
         }
@@ -129,5 +128,4 @@ public class VueListe extends VBox implements Observateur {
     public TreeView<Tache> getTreeView() {
         return treeView;
     }
-
 }
