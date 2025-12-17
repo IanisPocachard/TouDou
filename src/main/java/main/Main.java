@@ -1,3 +1,5 @@
+package main;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,8 +11,6 @@ import modele.Modele;
 import vue.VueBureau;
 import vue.VueHistorique;
 import vue.VueListe;
-
-import java.awt.*;
 
 public class Main extends Application {
 
