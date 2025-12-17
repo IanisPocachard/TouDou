@@ -1,0 +1,5 @@
+Bilan de l'itération 2 :
+
+Hormis Néo qui a ajouté des fonctionnalités relatives aux tâches dans l'application,
+nous avons fait en majorité des interfaces graphiques , parfois rudimentaires mais essentielles.
+Nous avons tous finis ce que nous avions prévu.
