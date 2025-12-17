@@ -1,6 +1,7 @@
-package modele;
+package modele.fabrique;
 
-import java.util.Date;
+import modele.SousTache;
+import modele.Tache;
 
 public class FabriqueSousTache implements FabriqueTache {
 

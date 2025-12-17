@@ -1,4 +1,7 @@
-package modele;
+package modele.fabrique;
+
+import modele.Tache;
+import modele.TachePrimaire;
 
 import java.util.Date;
 
