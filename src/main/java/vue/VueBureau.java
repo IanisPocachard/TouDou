@@ -26,7 +26,6 @@ public class VueBureau extends HBox implements Observateur {
         this.modele = modele;
 
         this.modele.ajouterObservateur(this);
-
         this.setSpacing(15);
         this.setPadding(new Insets(20));
         this.setAlignment(Pos.TOP_CENTER);
