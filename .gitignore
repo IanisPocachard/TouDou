@@ -2,6 +2,5 @@
 *.tmp
 *.class
 *.iml
-*.xml
 target/
 module-info.java
