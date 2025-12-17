@@ -25,11 +25,11 @@ public class Main extends Application {
 
         // LIGNE DE BOUTONS
         HBox boutons = new HBox();
-        Button btnNouvTache = new Button("Nouvelle tâche");
-        Button btnSupprTache = new Button("Supprimer une tâche");
+        Button btnListeTaches = new Button("Liste des tâches");
+        Button btnKanban = new Button("Vue Kanban");
         Button btnDiagGantt = new Button("Diagramme de Gantt");
         Button btnTachesArchive = new Button("Tâches archivées");
-        boutons.getChildren().addAll(btnNouvTache, btnSupprTache, btnDiagGantt, btnTachesArchive);
+        boutons.getChildren().addAll(btnListeTaches, btnKanban, btnDiagGantt, btnTachesArchive);
 
 
         // LISTE DES TACHES
