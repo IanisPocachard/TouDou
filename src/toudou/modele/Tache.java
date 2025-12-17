@@ -2,11 +2,13 @@ package modele;
 
 import java.io.Serializable;
 
-public class Tache implements Serializable {
+public abstract class Tache implements Serializable {
 
     private String nom;
     private String description;
     private int duree;
+
+
 
     // Pour éviter les problèmes de sérialisation
     private static final long serialVersionUID = 1L;
@@ -57,4 +59,13 @@ public class Tache implements Serializable {
         return this.toString(0);
     }
 
+    public abstract boolean getValide();
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

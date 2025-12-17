@@ -1,0 +1,13 @@
+Fonctionnalités :
+- Implémenter la gestion des dépendances (Néo)
+- Implémenter la gestion des changements d'état (Néo)
+- Implémenter la vue "Liste" (Maxime)
+- Implémenter la vue "Bureau" (Erdal)
+- Implémenter la vue "Tableau de bord" (Ianis)
+- Tests
+
+Cas d'utilisations :
+- Ajouter une dépendance entre 2 tâches
+- Afficher les tâches dans la vue "Bureau"
+- Afficher les tâches dans la vue "Liste"
+- Afficher les détails d'une tâche dans la vue "Liste"
