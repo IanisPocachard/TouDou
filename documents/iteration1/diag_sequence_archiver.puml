@@ -1,0 +1,15 @@
+@startuml
+actor Main
+hide footbox
+participant "Tache" as T
+
+activate Main
+Main -> T : archiver()
+
+alt this.etat == VALIDEE
+    activate T
+    T -> T : setEtat(ARCHIVEE)
+else this.etat != VALIDEE
+    T -> Main : Exception
+end
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+actor Client
+hide footbox
+participant "Tache" as T
+participant "Dependance" as D
+
+Client -> T : setEtat(netat)
+
+alt netat < 1 ou netat > 4
+    T -> Client : Exception("Etat invalide")
+else netat == VALIDEE
+    loop pour chaque dépendance
+        T -> D : getValide()
+        alt dépendance non validée
+            T -> Client : Exception("Impossible de valider : une dépendance n'est pas validée")
+        end
+    end
+else autre état valide
+end
+@enduml
