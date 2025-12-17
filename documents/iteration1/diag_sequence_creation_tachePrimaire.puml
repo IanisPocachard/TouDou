@@ -1,4 +1,4 @@
-@startuml
+git pu@startuml
 hide footbox
 title Séquence : Création d'une TachePrimaire via Fabrique
 
