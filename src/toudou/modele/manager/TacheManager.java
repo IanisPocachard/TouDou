@@ -1,9 +1,12 @@
 package modele.manager;
 
+import modele.SousTache;
 import modele.Tache;
+import modele.TachePrimaire;
 import modele.TacheSerializer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TacheManager implements Manager {
@@ -70,7 +73,25 @@ public class TacheManager implements Manager {
         }
 
         try {
-            Tache nouvelle = new Tache(nom, description, duree);
+            Tache nouvelle = new SousTache(nom, description, duree);
+            taches.set(index, nouvelle);
+
+            sauvegarder();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean update(int index, String nom, String description, int duree, Date dateDebut, Date dateEcheance) {
+        if (index < 0 || index >= taches.size()) {
+            return false;
+        }
+
+        try {
+            Tache nouvelle = new TachePrimaire(nom, description, duree, dateDebut, dateEcheance);
             taches.set(index, nouvelle);
 
             sauvegarder();
