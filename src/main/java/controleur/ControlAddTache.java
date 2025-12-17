@@ -10,7 +10,7 @@ import modele.TachePrimaire;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class ControlBtnAddTache implements EventHandler<ActionEvent> {
+public class ControlAddTache implements EventHandler<ActionEvent> {
 
     private Modele modele;
     private TextField champNom;
@@ -18,7 +18,7 @@ public class ControlBtnAddTache implements EventHandler<ActionEvent> {
     private TextField champDuree;
     private DatePicker champDateEcheance;
 
-    public ControlBtnAddTache(Modele modele, TextField nom, TextField desc, TextField duree, DatePicker dateFin) {
+    public ControlAddTache(Modele modele, TextField nom, TextField desc, TextField duree, DatePicker dateFin) {
         this.modele = modele;
         this.champNom = nom;
         this.champDescription = desc;
