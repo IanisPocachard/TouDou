@@ -51,7 +51,7 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Impossible d'ajouter la tâche");
+            alert.setHeaderText("impossible d'ajouter la tache");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
