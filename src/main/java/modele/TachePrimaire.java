@@ -7,13 +7,13 @@ import java.util.List;
 public class TachePrimaire extends Tache {
     private Date dateDebut;
     private Date dateEcheance;
-    private boolean archivee;
     private int etat;
 
     public static final int A_FAIRE=1;
     public static final int EN_COURS=2;
     public static final int A_TESTER=3;
     public static final int VALIDEE=4;
+    public static final int ARCHIVEE=5;
 
     //Partie composite
     private List<Tache> dependances;
@@ -22,7 +22,6 @@ public class TachePrimaire extends Tache {
         super(nom, description, duree);
         this.dateDebut = dateDebut;
         this.dateEcheance = dateEcheance;
-        this.archivee = false;
         this.dependances = new ArrayList<Tache>();
         this.etat=A_FAIRE;
     }
@@ -56,7 +55,7 @@ public class TachePrimaire extends Tache {
      * @return archivee
      */
     public boolean isArchivee() {
-        return archivee;
+        return this.etat==ARCHIVEE;
     }
 
     public String toString(){
@@ -79,7 +78,7 @@ public class TachePrimaire extends Tache {
     }
 
     public void setEtat(int netat) throws Exception {
-        if (netat < 1 || netat > 4) { //si l'état n'es pas un état valide
+        if (netat < 1 || netat > 5) { //si l'état n'es pas un état valide
             throw new Exception("Etat invalide"); // on renvoie une erreur
         }
         if (netat == VALIDEE) { // si l'état est l'état VALIDEE
@@ -94,6 +93,13 @@ public class TachePrimaire extends Tache {
 
     public int getEtat(){
         return this.etat;
+    }
+
+    public void archiver() throws Exception{
+        if(this.getEtat() == VALIDEE){
+            this.setEtat(ARCHIVEE);
+        }
+        else throw new Exception("Ne peut pas être archivée car n'est pas validée");
     }
 
     public boolean getValide(){
