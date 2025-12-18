@@ -105,11 +105,12 @@ public class VueGantt {
 
         // fenêtre
         ScrollPane scroll = new ScrollPane(grid);
-        scroll.setFitToWidth(false);
+        scroll.setFitToWidth(true);
         scroll.setFitToHeight(true);
 
         VBox root = new VBox(scroll);
         root.setPadding(new Insets(10));
+        VBox.setVgrow(scroll, javafx.scene.layout.Priority.ALWAYS);
 
         Stage stage = new Stage();
         stage.setTitle("Diagramme de Gantt");
