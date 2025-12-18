@@ -7,6 +7,9 @@ public abstract class Tache implements Serializable {
     private String nom;
     private String description;
     private int duree;
+    protected int id;
+
+    private static int compteur=0;
 
 
 
@@ -21,6 +24,7 @@ public abstract class Tache implements Serializable {
         } else {
             throw new Exception("Vous tenez de créer une nouvelle tâche avec des mauvais paramètres !");
         }
+        this.id=compteur++;
     }
 
     /**
@@ -44,6 +48,12 @@ public abstract class Tache implements Serializable {
      * @return duree
      */
     public int getDuree(){return duree;}
+
+    public int getId() {
+        return id;
+    }
+
+    public abstract void setEtat(int netat)throws Exception;
 
     /**
      * Retourne sous format texte une tâche

@@ -28,6 +28,17 @@ public class Modele implements Sujet {
         this.observateurs.remove(o);
     }
 
+    public void changerEtat(int idTache, int etatCible){
+        for (Tache tache : taches) {
+            if (tache.getId() == idTache) {
+                try {
+                    tache.setEtat(etatCible);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     @Override
     public void notifierObservateurs() {
         for (Observateur o : observateurs) {

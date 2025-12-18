@@ -12,6 +12,7 @@ import modele.Tache;
 import modele.TachePrimaire;
 import modele.manager.TacheManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VueBureau extends HBox implements Observateur {
@@ -22,6 +23,15 @@ public class VueBureau extends HBox implements Observateur {
     private VBox colInProgress;
     private VBox colTesting;
     private VBox colDone;
+
+    private List<Label> cartes = new ArrayList<>();
+
+    //ensemble des getters
+    public List<Label> getCartes() { return cartes; }
+    public VBox getColToDo() { return colToDo; }
+    public VBox getColInProgress() { return colInProgress; }
+    public VBox getColTesting() { return colTesting; }
+    public VBox getColDone() { return colDone; }
 
     public VueBureau(Modele modele) {
         this.modele = modele;
@@ -111,6 +121,7 @@ public class VueBureau extends HBox implements Observateur {
                 "-fx-background-radius: 5;" +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);");
 
+        cartes.add(lbl);
         return lbl;
     }
 
