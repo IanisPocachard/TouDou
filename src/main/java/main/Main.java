@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Modele;
 import vue.VueBureau;
+import vue.VueFormGantt;
 import vue.VueHistorique;
 import vue.VueListe;
 
@@ -28,6 +29,7 @@ public class Main extends Application {
         Button btnListeTaches = new Button("Liste des tâches");
         Button btnKanban = new Button("Vue Kanban");
         Button btnDiagGantt = new Button("Diagramme de Gantt");
+        btnDiagGantt.setOnAction(e -> VueFormGantt.afficher(modele));
         Button btnTachesArchive = new Button("Tâches archivées");
         boutons.getChildren().addAll(btnListeTaches, btnKanban, btnDiagGantt, btnTachesArchive);
 
