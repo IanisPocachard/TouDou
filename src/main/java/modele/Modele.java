@@ -38,6 +38,7 @@ public class Modele implements Sujet {
                 }
             }
         }
+        this.notifierObservateurs();
     }
     @Override
     public void notifierObservateurs() {

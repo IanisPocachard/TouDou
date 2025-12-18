@@ -43,16 +43,10 @@ public class DragDropController {
         });
 
         colonne.setOnDragEntered(event -> {
-            if (event.getDragboard().hasString()) {
-                colonne.setStyle("-fx-background-color: derive(" + getColonneColor(colonne) + ", 30%);" +
-                        "-fx-border-color: black;");
-            }
             event.consume();
         });
 
         colonne.setOnDragExited(event -> {
-            colonne.setStyle("-fx-background-color: " + getColonneColor(colonne) + ";" +
-                    "-fx-border-color: black;");
             event.consume();
         });
 
@@ -67,16 +61,5 @@ public class DragDropController {
             event.setDropCompleted(success);
             event.consume();
         });
-    }
-
-    // helper pour récupérer la couleur d'une colonne
-    private String getColonneColor(VBox colonne) {
-        String style = colonne.getStyle();
-        if (style.contains("-fx-background-color:")) {
-            int start = style.indexOf("-fx-background-color:") + 19;
-            int end = style.indexOf(";", start);
-            if (end > start) return style.substring(start, end).trim();
-        }
-        return "#ffffff";
     }
 }
