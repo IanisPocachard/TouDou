@@ -56,11 +56,7 @@ public class VueGantt {
         grid.setHgap(4);
         grid.setVgap(6);
         grid.setPadding(new Insets(10));
-        grid.getColumnConstraints().add(new ColumnConstraints(120));
 
-        for (int c = 0; c < days; c++) {
-            grid.getColumnConstraints().add(new ColumnConstraints(35));
-        }
 
 
         // header dates
@@ -76,31 +72,31 @@ public class VueGantt {
         }
 
         // barres
-        int row = 1;
+        int ligne = 1;
         for (TachePrimaire tp : taches) {
-            LocalDate start = tp.getDateDebut();
-            LocalDate end = tp.getDateEcheance();
+            LocalDate debut = tp.getDateDebut();
+            LocalDate fin = tp.getDateEcheance();
 
-            // sécurité si end < start
-            if (end.isBefore(start)) {
-                end = start;
+            // sécurité si fin < debut
+            if (fin.isBefore(debut)) {
+                fin = debut;
             }
 
-            int decalage = (int) ChronoUnit.DAYS.between(min, start);
-            int length = tp.getDuree();
+            int decalage = (int) ChronoUnit.DAYS.between(min, debut);
+            int largeur = tp.getDuree();
 
             Label name = new Label(tp.getNom());
             name.setStyle("-fx-font-weight: bold;");
-            grid.add(name, 0, row);
+            grid.add(name, 0, ligne);
 
             Label bar = new Label(" ");
             bar.setMaxWidth(Double.MAX_VALUE);
-            bar.setPrefHeight(18);
+            bar.setMinHeight(18);
             bar.setStyle("-fx-background-color: #4f46e5; -fx-background-radius: 6;");
             bar.setPadding(new Insets(0, 4, 0, 4));
-            grid.add(bar, decalage + 1, row, length, 1);
+            grid.add(bar, decalage + 1, ligne, largeur, 1);
 
-            row++;
+            ligne++;
         }
 
         // fenêtre
