@@ -12,6 +12,10 @@ public class SousTache extends Tache {
         return this.validee;
     }
 
+    public void setEtat(int netat) throws Exception {
+        throw new Exception("une sous-tache ne peut changer d'état");
+    }
+
     public void setValide(boolean valide){
         this.validee = valide;
     }

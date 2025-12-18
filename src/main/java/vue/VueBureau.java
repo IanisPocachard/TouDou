@@ -12,6 +12,7 @@ import modele.Tache;
 import modele.TachePrimaire;
 import modele.manager.TacheManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VueBureau extends HBox implements Observateur {
@@ -23,6 +24,15 @@ public class VueBureau extends HBox implements Observateur {
     private VBox colTesting;
     private VBox colDone;
 
+    private List<Label> cartes = new ArrayList<>();
+
+    //ensemble des getters
+    public List<Label> getCartes() { return cartes; }
+    public VBox getColToDo() { return colToDo; }
+    public VBox getColInProgress() { return colInProgress; }
+    public VBox getColTesting() { return colTesting; }
+    public VBox getColDone() { return colDone; }
+
     public VueBureau(Modele modele) {
         this.modele = modele;
 
@@ -32,15 +42,15 @@ public class VueBureau extends HBox implements Observateur {
         this.setAlignment(Pos.TOP_CENTER);
 
         initialiserColonnes();
-
+        ajouterTouteCartes();
         this.actualiser(modele);
     }
 
     private void initialiserColonnes() {
-        colToDo = creerColonne("TO DO", "#e6e6fa");
-        colInProgress = creerColonne("IN PROGRESS", "#fffacd");
-        colTesting = creerColonne("TESTING", "#ffdab9");
-        colDone = creerColonne("DONE", "#98fb98");
+        colToDo = creerColonne("TO DO", "#FFC108");
+        colInProgress = creerColonne("IN PROGRESS", "#FF5A08");
+        colTesting = creerColonne("TESTING", "#24739B");
+        colDone = creerColonne("DONE", "#36CBC1");
         this.getChildren().addAll(colToDo, colInProgress, colTesting, colDone);
     }
 
@@ -49,8 +59,7 @@ public class VueBureau extends HBox implements Observateur {
         box.setPadding(new Insets(10));
 
         box.setStyle("-fx-background-color: " + couleurHex + ";" +
-                "-fx-border-color: black;" +
-                "-fx-border-width: 1;");
+                "-fx-background-radius: 10;");
 
         box.setMinWidth(200);
         box.setPrefWidth(250);
@@ -76,41 +85,40 @@ public class VueBureau extends HBox implements Observateur {
         viderContenuColonne(colTesting);
         viderContenuColonne(colDone);
 
-        List<Tache> taches = m.getTaches();
-        if (taches == null) return;
-
-        for (Tache t : taches) {
+        for (Tache t : m.getTaches()) {
             if (t instanceof TachePrimaire) {
                 TachePrimaire tp = (TachePrimaire) t;
-                Label carte = creerCarteTache(tp);
 
-                switch (tp.getEtat()) {
-                    case TachePrimaire.A_FAIRE:
-                        colToDo.getChildren().add(carte);
-                        break;
-                    case TachePrimaire.EN_COURS:
-                        colInProgress.getChildren().add(carte);
-                        break;
-                    case TachePrimaire.A_TESTER:
-                        colTesting.getChildren().add(carte);
-                        break;
-                    case TachePrimaire.VALIDEE:
-                        colDone.getChildren().add(carte);
-                        break;
+                // Cherche la carte existante dans la liste
+                Label carte = cartes.stream()
+                        .filter(l -> l.getText().equals(tp.getNom()))
+                        .findFirst()
+                        .orElse(null);
+
+                if (carte != null) {
+                    // Déplace la carte dans la colonne correspondant à son état
+                    switch (tp.getEtat()) {
+                        case TachePrimaire.A_FAIRE -> colToDo.getChildren().add(carte);
+                        case TachePrimaire.EN_COURS -> colInProgress.getChildren().add(carte);
+                        case TachePrimaire.A_TESTER -> colTesting.getChildren().add(carte);
+                        case TachePrimaire.VALIDEE -> colDone.getChildren().add(carte);
+                    }
                 }
             }
         }
     }
+
 
     private Label creerCarteTache(TachePrimaire t) {
         Label lbl = new Label(t.getNom());
         lbl.setPadding(new Insets(10));
         lbl.setMaxWidth(Double.MAX_VALUE);
         lbl.setWrapText(true);
-        lbl.setStyle("-fx-background-color: rgba(255, 255, 255, 0.6);" +
+        lbl.setStyle("-fx-background-color: rgba(255, 255, 255, 0.7);" +
                 "-fx-background-radius: 5;" +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);");
 
+        cartes.add(lbl);
         return lbl;
     }
 
@@ -118,5 +126,26 @@ public class VueBureau extends HBox implements Observateur {
         if (box.getChildren().size() > 1) {
             box.getChildren().remove(1, box.getChildren().size());
         }
+    }
+
+    private void ajouterTouteCartes(){
+        List<Tache> taches = modele.getTaches();
+        if (taches != null) {
+            for (Tache t : taches) {
+                if (t instanceof TachePrimaire tp) {
+                    Label carte = creerCarteTache(tp); // une seule création
+                    cartes.add(carte);
+
+                    // Ajout dans la colonne correspondant à l'état
+                    switch (tp.getEtat()) {
+                        case TachePrimaire.A_FAIRE -> colToDo.getChildren().add(carte);
+                        case TachePrimaire.EN_COURS -> colInProgress.getChildren().add(carte);
+                        case TachePrimaire.A_TESTER -> colTesting.getChildren().add(carte);
+                        case TachePrimaire.VALIDEE -> colDone.getChildren().add(carte);
+                    }
+                }
+            }
+        }
+
     }
 }

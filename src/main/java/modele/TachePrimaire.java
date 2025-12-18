@@ -9,6 +9,7 @@ public class TachePrimaire extends Tache {
     private Date dateEcheance;
     private int etat;
 
+
     public static final int A_FAIRE=1;
     public static final int EN_COURS=2;
     public static final int A_TESTER=3;
@@ -18,12 +19,13 @@ public class TachePrimaire extends Tache {
     //Partie composite
     private List<Tache> dependances;
 
-    public TachePrimaire(String nom, String description, int duree, Date dateDebut, Date dateEcheance) throws Exception{
+    public TachePrimaire(String nom, String description, int duree, Date dateDebut, Date dateEcheance) throws Exception {
         super(nom, description, duree);
         this.dateDebut = dateDebut;
         this.dateEcheance = dateEcheance;
         this.dependances = new ArrayList<Tache>();
-        this.etat=A_FAIRE;
+        this.etat = A_FAIRE;
+
     }
 
     public void ajoutDependance(Tache tache) {
@@ -49,6 +51,11 @@ public class TachePrimaire extends Tache {
     public List<Tache> getDependances() {
         return dependances;
     }
+
+    public int getId() {
+        return id;
+    }
+
 
     /**
      * retourne vrai si la tache est archivée
@@ -94,6 +101,7 @@ public class TachePrimaire extends Tache {
     public int getEtat(){
         return this.etat;
     }
+
 
     public void archiver() throws Exception{
         if(this.getEtat() == VALIDEE){
