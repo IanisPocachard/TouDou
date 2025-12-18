@@ -67,7 +67,7 @@ public class TestTaches {
 
     @Test
     public void test_05_TacheSerializer_ecrirePuisLire() throws Exception {
-        String chemin = "src/toudou/taches.toudou";
+        String chemin = "resources/taches.toudou";
         File f = new File(chemin);
 
         if (f.getParentFile() != null && !f.getParentFile().exists()) {
