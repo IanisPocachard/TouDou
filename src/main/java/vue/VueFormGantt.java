@@ -51,9 +51,12 @@ public class VueFormGantt {
         btnValider.setOnAction(e -> {
             List<Tache> selection = new ArrayList<>();
             for (CheckBox cb : checks) {
-                if (cb.isSelected()) {
-                    selection.add((Tache) cb.getUserData());
-                }
+                if (cb.isSelected()) selection.add((Tache) cb.getUserData());
+            }
+
+            if (selection.isEmpty()) {
+                new Alert(Alert.AlertType.WARNING, "Sélectionne au moins une tâche.").showAndWait();
+                return;
             }
 
             VueGantt.afficher(selection);

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,8 +38,8 @@ public class TestTaches {
 
     @Test
     public void test_02_Construction_normale_TachePrimaire() throws Exception {
-        Date date1 = new Date(10/12/2025);
-        Date date2 = new Date(12/12/2025);
+        LocalDate date1 = LocalDate.of(2025, 12, 10);
+        LocalDate date2 = LocalDate.of(2025, 12, 12);
         TachePrimaire t = new TachePrimaire("Test TachePrimaire", "Test des tâches primaire pour vérifier la construction normale",  1, date1, date2);
         assertNotNull(t, "L'objet TachePrimaire ne doit pas être null");
         assertEquals("Le nom n'est pas correctement initialisé", t.getNom(), "Test TachePrimaire");
@@ -59,14 +60,14 @@ public class TestTaches {
 
     @Test
     public void test_04_Dependance() throws Exception {
-        TachePrimaire t = new TachePrimaire("Tache 1", "Test dépendance", 2, new Date(01/12/2025), new Date(12/12/2025));
+        TachePrimaire t = new TachePrimaire("Tache 1", "Test dépendance", 2, LocalDate.of(2025, 12, 01), LocalDate.of(2025, 12, 12));
         SousTache st = new SousTache("Sous tache 1", "Test dépendance", 2);
         t.ajoutDependance(st);
         assertEquals("La liste de dépendance n'est pas correctement initialisée", t.getDependances().size(), 1);
     }
 
     @Test
-    public void test_05_TacheSerializer_ecrirePuisLire() throws Exception {
+    public void test_05_TacheSerializer_ecrirePuisLire_avec_personnaliser() throws Exception {
         String chemin = "resources/taches.toudou";
         File f = new File(chemin);
 
@@ -77,15 +78,22 @@ public class TestTaches {
         if (f.exists()) f.delete();
         assertNull(TacheSerializer.lireFichier(), "Si le fichier n'existe pas, lireFichier doit retourner null");
 
-        // 2) écrire puis relire
+        // écrire puis relire
         List<Tache> taches = new ArrayList<>();
-        taches.add(fabrique.fab("T1", "Desc 1", 2));
-        taches.add(fabrique.fab("T2", "Desc 2", 5));
+
+        TachePrimaire t1 = (TachePrimaire) fabrique.fab("T1", "Desc 1", 18);
+        FabriqueTachePrimaire.personnaliser(t1, LocalDate.of(2025, 01, 01), LocalDate.of(2025, 01, 20));
+
+        TachePrimaire t2 = (TachePrimaire) fabrique.fab("T2", "Desc 2", 10);
+        FabriqueTachePrimaire.personnaliser(t2, LocalDate.of(2025, 01, 20), LocalDate.of(2025, 01, 30));
+
+        taches.add(t1);
+        taches.add(t2);
 
         TacheSerializer.ecrireFichier(taches);
 
         List<Tache> relu = TacheSerializer.lireFichier();
-        assertNotNull(relu,"La liste relue ne doit pas être null");
+        assertNotNull(relu, "La liste relue ne doit pas être null");
         assertEquals("La taille doit être 2", 2, relu.size());
         assertEquals("Nom T1 incorrect", "T1", relu.get(0).getNom());
         assertEquals("Nom T2 incorrect", "T2", relu.get(1).getNom());

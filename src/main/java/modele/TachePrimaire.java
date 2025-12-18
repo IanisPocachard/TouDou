@@ -1,12 +1,13 @@
 package modele;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class TachePrimaire extends Tache {
-    private Date dateDebut;
-    private Date dateEcheance;
+    private LocalDate dateDebut;
+    private LocalDate dateEcheance;
     private int etat;
 
 
@@ -19,7 +20,7 @@ public class TachePrimaire extends Tache {
     //Partie composite
     private List<Tache> dependances;
 
-    public TachePrimaire(String nom, String description, int duree, Date dateDebut, Date dateEcheance) throws Exception {
+    public TachePrimaire(String nom, String description, int duree, LocalDate dateDebut, LocalDate dateEcheance) throws Exception {
         super(nom, description, duree);
         this.dateDebut = dateDebut;
         this.dateEcheance = dateEcheance;
@@ -36,7 +37,7 @@ public class TachePrimaire extends Tache {
      * recupere la date de debut de la tâche
      * @return dateDebut
      */
-    public Date getDateDebut() {
+    public LocalDate getDateDebut() {
         return dateDebut;
     }
 
@@ -44,7 +45,7 @@ public class TachePrimaire extends Tache {
      * recupere la date de fin de la tâche
      * @return dateEcheance
      */
-    public Date getDateEcheance() {
+    public LocalDate getDateEcheance() {
         return dateEcheance;
     }
 
@@ -114,11 +115,11 @@ public class TachePrimaire extends Tache {
             return this.etat == TachePrimaire.VALIDEE;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public void setDateEcheance(Date dateEcheance) {
+    public void setDateEcheance(LocalDate dateEcheance) {
         this.dateEcheance = dateEcheance;
     }
 }

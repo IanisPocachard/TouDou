@@ -3,6 +3,7 @@ package modele.fabrique;
 import modele.Tache;
 import modele.TachePrimaire;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class FabriqueTachePrimaire implements FabriqueTache {
@@ -12,7 +13,7 @@ public class FabriqueTachePrimaire implements FabriqueTache {
         return new TachePrimaire(nom, description, duree, null, null);
     }
 
-    public static TachePrimaire personnaliser(TachePrimaire tache, Date dateDebut, Date dateEcheance) {
+    public static TachePrimaire personnaliser(TachePrimaire tache, LocalDate dateDebut, LocalDate dateEcheance) {
         tache.setDateDebut(dateDebut);
         tache.setDateEcheance(dateEcheance);
         return tache;
