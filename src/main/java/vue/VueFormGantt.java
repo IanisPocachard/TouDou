@@ -55,11 +55,8 @@ public class VueFormGantt {
                     selection.add((Tache) cb.getUserData());
                 }
             }
-    
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setHeaderText(null);
-            a.setContentText("Sélection : " + selection.size() + " tâche(s)");
-            a.showAndWait();
+
+            VueGantt.afficher(selection);
 
             stage.close();
         });
