@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TacheSerializer {
 
-    private static final String chemin = "src/main/resources/taches.toudou";
+    private static final String chemin = "resources/taches.toudou";
 
     // ####################
     // # PATRON SINGLETON #
