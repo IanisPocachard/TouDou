@@ -32,7 +32,7 @@ public class VueAjoutTache extends Stage {
         taDescription.setPrefHeight(100);
 
         // durée et date
-        Label lblDuree = new Label("Durée (minutes)");
+        Label lblDuree = new Label("Durée");
         lblDuree.setStyle("-fx-font-weight: bold;");
         TextField tfDuree = new TextField();
 
@@ -44,15 +44,6 @@ public class VueAjoutTache extends Stage {
         Button btnValider = new Button("AJOUTER");
         btnValider.setStyle("-fx-background-color: #4169E1; -fx-text-fill: white; -fx-font-weight: bold;");
         btnValider.setMaxWidth(Double.MAX_VALUE);
-
-        // --- LIEN AVEC LE CONTROLEUR ---
-        // On réutilise ton contrôleur existant !
-        // Note: taDescription est une TextArea, mais le contrôleur veut un TextField ?
-        // -> Pour faire simple, on passe un TextField caché ou on adaptera le contrôleur plus tard.
-        // Pour l'instant, astuce : on créé un TextField factice pour que ça compile si tu ne veux pas changer le contrôleur
-        // MAIS l'idéal est de modifier ControlAddTache pour accepter TextArea.
-        // Ici je triche un peu : je passe tfDuree (TextField) c'est ok.
-        // Pour la description, le ControlAddTache attend un TextField, donc on va adapter le contrôleur juste après.
 
         ControlAddTache controleur = new ControlAddTache(modele, tfNom, taDescription, tfDuree, dpEcheance, this);
         btnValider.setOnAction(controleur);
