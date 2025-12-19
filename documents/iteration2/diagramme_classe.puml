@@ -25,11 +25,16 @@ class VueBureau extends Hbox implements Observateur{
     colDone : VBox
 
     initialiserColonne(): void
+    activerDragDropDesColonnes(): void
     creerColonne(String, String): VBox
     actualiser(Sujet): void
     rafraichirTache(Modele): void
     creerCarteTache(TachePrimaire): Label
     viderContenuColonne(VBox): void
+    getColToDo(): Vbox
+    getColInProgress(): Vbox
+    getColTesting(): Vbox
+    getColDone(): Vbox
 }
 
 class VueHistorique extends TextArea implements Observateur{
@@ -44,15 +49,44 @@ class VueListe extends VBox implements Observateur{
     btnAjouterTache: Button
     btnAjouterSousTache: Button
     btnSupprimer: Button
+
     buildVl(): void
     actualiser(Sujet): void
-    getSousTaches(TachePrimaire): List<Tache>
-    getTreetView(): TreeView<Tache>
 }
+
+class ControlAddSousTache{
+        - parent : TachePrimaire
+        - champNom : TextField
+        - champDescription : TextArea
+        - champDuree : TextField
+        - fenetre : Stage
+
+        + handle(ActionEvent): void
+}
+
+class ControlAddTache{
+        - champNom : TextField
+        - champDescription : TextArea
+        - champDuree : TextField
+        - champDateEcheance : DatePicker
+        - fenetre : Stage
+
+        + handle(ActionEvent): void
+}
+
+class DragDropController{
+    + makeDraggable(Label): void
+    + makeDroppable(VBox, int): void
+}
+
+
+
+
 
 Modele"1" <--- "*"VueBureau : modele
 Modele"1" <--- "*"VueHistorique : modele
 Modele"1" <--- "*"VueListe : modele
-
-
+Modele"1" <--- "*"ControlAddSousTache : modele
+Modele"1" <--- "*"ControlAddTache : modele
+Modele"1" <--- "*"DragDropController : modele
 @enduml

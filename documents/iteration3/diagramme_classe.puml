@@ -23,8 +23,10 @@ class VueBureau extends Hbox implements Observateur{
     colInProgress : VBox
     colTesting : VBox
     colDone : VBox
+    cartes : List<Label>
 
     initialiserColonne(): void
+    activerDrag
     creerColonne(String, String): VBox
     actualiser(Sujet): void
     rafraichirTache(Modele): void

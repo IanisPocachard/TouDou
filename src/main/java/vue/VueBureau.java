@@ -139,8 +139,16 @@ public class VueBureau extends HBox implements Observateur {
     }
 
     // Getters
-    public VBox getColToDo() { return colToDo; }
-    public VBox getColInProgress() { return colInProgress; }
-    public VBox getColTesting() { return colTesting; }
-    public VBox getColDone() { return colDone; }
+    public VBox getColToDo() {
+        return colToDo;
+    }
+    public VBox getColInProgress(){
+        return colInProgress;
+    }
+    public VBox getColTesting(){
+        return colTesting;
+    }
+    public VBox getColDone(){
+        return colDone;
+    }
 }
