@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import modele.Modele;
 import modele.TachePrimaire;
+
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -45,10 +47,10 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
                 throw new Exception("Durée invalide.");
             }
 
-            Date dateDebut = new Date();
-            Date dateFin = new Date();
+            LocalDate dateDebut = LocalDate.now();
+            LocalDate dateFin = LocalDate.now();
             if (champDateEcheance.getValue() != null) {
-                dateFin = Date.from(champDateEcheance.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                dateFin = champDateEcheance.getValue();
             }
 
             TachePrimaire nouvelleTache = new TachePrimaire(nom, description, duree, dateDebut, dateFin);
