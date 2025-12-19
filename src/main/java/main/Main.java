@@ -24,7 +24,9 @@ public class Main extends Application {
         VBox screen = new VBox();
         Modele modele = new Modele();
 
-        // 1. BOUTONS
+        // ###########
+        // # BOUTONS #
+        // ###########
         HBox boutons = new HBox();
 
         Button btnListeTaches = new Button("Liste des tâches");
@@ -51,16 +53,32 @@ public class Main extends Application {
         boutons.setSpacing(10);
         boutons.setStyle("-fx-padding: 10;");
 
-
         boutons.getChildren().addAll(btnListeTaches, btnKanban, btnDiagGantt, btnTachesArchive);
 
+        // ####################
+        // # LISTE DES TACHES #
+        // ####################
         VueListe liste = new VueListe(modele);
+
+        // ####################
+        // # AFFICHAGE KANBAN #
+        // ####################
         VueBureau kanban = new VueBureau(modele);
 
-        VBox historique = new VBox();
-        historique.getChildren().addAll(new Label("Historique : "), new VueHistorique(modele));
+        // ##############
+        // # HISTORIQUE #
+        // ##############
+        VBox historique = new VBox(10);
+        Label labelHistorique = new Label("Historique : ");
+        labelHistorique.setStyle("""
+            -fx-font-size: 20px;
+            -fx-font-weight: bold;
+        """);
+        historique.getChildren().addAll(labelHistorique, new VueHistorique(modele));
 
-        // AJOUT DE TOUS LES ELEMENTS
+        // ##############################
+        // # AJOUT DE TOUS LES ELEMENTS #
+        // ##############################
         HBox elements = new HBox(20);
         VBox partieGauche = new VBox();
         VBox partieDroite = new VBox();
@@ -71,7 +89,7 @@ public class Main extends Application {
 
         screen.getChildren().addAll(boutons, elements);
 
-        Scene scene = new Scene(screen, 1000, 800);
+        Scene scene = new Scene(screen, 1600, 800);
         primaryStage.setScene(scene);
         primaryStage.setTitle("TouDou - Tableau de bord");
         primaryStage.show();
