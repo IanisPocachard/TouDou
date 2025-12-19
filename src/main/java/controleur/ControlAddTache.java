@@ -29,9 +29,23 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         try {
-            String nom = champNom.getText();
-            String description = champDescription.getText();
-            int duree = Integer.parseInt(champDuree.getText());
+            String nom = champNom.getText().trim();
+            String description = champDescription.getText().trim();
+            String dureeTexte = champDuree.getText().trim();
+
+            if (nom.isEmpty()) {
+                throw new Exception("Le nom de la tâche ne peut pas être vide.");
+            }
+            if (dureeTexte.isEmpty()) {
+                throw new Exception("La durée ne peut pas être vide.");
+            }
+
+            int duree;
+            try {
+                duree = Integer.parseInt(dureeTexte);
+            } catch (NumberFormatException e) {
+                throw new Exception("La durée doit être un nombre entier (ex: 60).");
+            }
 
             Date dateDebut = new Date();
             Date dateFin = new Date();
@@ -49,9 +63,9 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
             champDateEcheance.setValue(null);
 
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("impossible d'ajouter la tache");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Attention");
+            alert.setHeaderText("Impossible d'ajouter la tâche");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
