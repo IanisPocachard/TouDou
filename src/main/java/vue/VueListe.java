@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.ControlAddTache;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -24,6 +25,11 @@ public class VueListe extends VBox implements Observateur {
     private final TreeItem<Tache> root = new TreeItem<>(null);
     private final TreeView<Tache> treeView = new TreeView<>(root);
 
+    private final TextField tfNom = new TextField();
+    private final TextField tfDescription = new TextField();
+    private final TextField tfDuree = new TextField();
+    private final DatePicker dpEcheance = new DatePicker();
+
     private final Button btnAjouterTache = new Button("Ajouter tâche");
     private final Button btnAjouterSousTache = new Button("Ajouter sous-tâche");
     private final Button btnSupprimer = new Button("Supprimer");
@@ -44,6 +50,13 @@ public class VueListe extends VBox implements Observateur {
         setSpacing(10);
         setPadding(new Insets(10));
 
+        tfNom.setPromptText("Nom de la tâche");
+        tfDescription.setPromptText("Description");
+        tfDuree.setPromptText("Durée (min)");
+        dpEcheance.setPromptText("Échéance");
+
+        HBox formulaire = new HBox(10, tfNom, tfDescription, tfDuree, dpEcheance);
+
         root.setExpanded(true);
         treeView.setShowRoot(false);
 
@@ -59,14 +72,14 @@ public class VueListe extends VBox implements Observateur {
                             setStyle("");
                         } else {
                             setText(tache.toString());
-                            setStyle(" -fx-background-color: grey ; ");
+                            setStyle("-fx-background-color: grey; -fx-text-fill: white; -fx-border-color: white;");
                         }
                     }
                 };
 
                 cell.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                     if (!cell.isEmpty() && cell.getItem() != null) {
-                        // click controller
+
                     }
                 });
 
@@ -76,23 +89,23 @@ public class VueListe extends VBox implements Observateur {
 
         HBox bar = new HBox(10, btnAjouterTache, btnAjouterSousTache, btnSupprimer);
 
-        btnAjouterTache.setOnAction(e -> { /* controller */ });
-        btnAjouterSousTache.setOnAction(e -> { /* controller */ });
-        btnSupprimer.setOnAction(e -> { /* controller */ });
+        if (this.sujet instanceof Modele) {
+            Modele m = (Modele) this.sujet;
+            ControlAddTache controleur = new ControlAddTache(m, tfNom, tfDescription, tfDuree, dpEcheance);
+            btnAjouterTache.setOnAction(controleur);
+        }
+
+        btnAjouterSousTache.setOnAction(e -> { });
+        btnSupprimer.setOnAction(e -> { });
 
         VBox.setVgrow(treeView, Priority.ALWAYS);
-        getChildren().addAll(bar, treeView);
+        getChildren().addAll(formulaire, bar, treeView);
     }
 
     @Override
     public void actualiser(Sujet s) {
-        if (s == null) {
-            return;
-        }
-
-        if (!(s instanceof Modele m)) {
-            return;
-        }
+        if (s == null) return;
+        if (!(s instanceof Modele m)) return;
 
         List<Tache> racines = m.getTaches();
 
@@ -109,7 +122,6 @@ public class VueListe extends VBox implements Observateur {
                         item.getChildren().add(new TreeItem<>(st));
                     }
                 }
-
                 root.getChildren().add(item);
             }
         });
@@ -117,9 +129,11 @@ public class VueListe extends VBox implements Observateur {
 
     private List<Tache> getSousTaches(TachePrimaire tp) {
         List<Tache> listeSousTaches = new ArrayList<>();
-        for (int i = 0; i < tp.getDependances().size(); i++) {
-            if (tp.getDependances().get(i) instanceof SousTache) {
-                listeSousTaches.add(tp.getDependances().get(i));
+        if (tp.getDependances() != null) {
+            for (Tache t : tp.getDependances()) {
+                if (t instanceof SousTache) {
+                    listeSousTaches.add(t);
+                }
             }
         }
         return listeSousTaches;
