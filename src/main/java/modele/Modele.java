@@ -58,6 +58,7 @@ public class Modele implements Sujet {
 
     public void ajouterTache(Tache t) {
         this.taches.add(t);
+        this.manager.create(t);
         this.notifierObservateurs();
     }
 }

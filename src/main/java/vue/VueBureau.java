@@ -91,7 +91,7 @@ public class VueBureau extends HBox implements Observateur {
                 TachePrimaire tp = (TachePrimaire) t;
 
                 Label carte = cartes.stream()
-                        .filter(l -> l.getText().equals(tp.getNom()))
+                        .filter(l -> l.getUserData() == tp)
                         .findFirst()
                         .orElse(null);
 
@@ -99,7 +99,10 @@ public class VueBureau extends HBox implements Observateur {
                     carte = creerCarteTache(tp);
                 }
 
-                carte.setUserData(tp);
+
+                if (carte.getParent() instanceof Pane) {
+                    ((Pane) carte.getParent()).getChildren().remove(carte);
+                }
 
                 switch (tp.getEtat()) {
                     case TachePrimaire.A_FAIRE -> colToDo.getChildren().add(carte);

@@ -56,7 +56,7 @@ public class VueAjoutTache extends Stage {
                 btnValider
         );
 
-        Scene scene = new Scene(layout, 400, 500);
+        Scene scene = new Scene(layout, 600, 800);
         this.setScene(scene);
     }
 }
