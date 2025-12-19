@@ -1,4 +1,4 @@
-package controleur;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,9 +16,9 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
     private TextArea champDescription;
     private TextField champDuree;
     private DatePicker champDateEcheance;
-    private Stage fenetre; // Pour pouvoir la fermer
+    private Stage fenetre;
 
-    // Constructeur mis à jour
+    // Constructeur
     public ControlAddTache(Modele modele, TextField nom, TextArea desc, TextField duree, DatePicker dateFin, Stage fenetre) {
         this.modele = modele;
         this.champNom = nom;
@@ -32,7 +32,7 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         try {
             String nom = champNom.getText().trim();
-            String description = champDescription.getText().trim(); // TextArea marche pareil
+            String description = champDescription.getText().trim();
             String dureeTexte = champDuree.getText().trim();
 
             if (nom.isEmpty()) throw new Exception("Le nom est vide.");
@@ -54,7 +54,6 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
             TachePrimaire nouvelleTache = new TachePrimaire(nom, description, duree, dateDebut, dateFin);
             modele.ajouterTache(nouvelleTache);
 
-            // Succès ! On ferme la fenêtre
             fenetre.close();
 
         } catch (Exception e) {
