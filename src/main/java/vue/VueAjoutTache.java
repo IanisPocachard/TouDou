@@ -1,11 +1,10 @@
 package vue;
 
-import controleur.ControlAddTache;
+import controller.ControlAddTache;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modele.Modele;
 
