@@ -52,12 +52,29 @@ public class VueListe extends VBox implements Observateur {
             }
         });
 
-        HBox bar = new HBox(10, btnAjouterTache, btnSupprimer);
+        HBox bar = new HBox(10, btnAjouterTache, btnAjouterSousTache, btnSupprimer);
 
         btnAjouterTache.setOnAction(e -> {
             if (sujet instanceof Modele) {
                 VueAjoutTache fenetreAjout = new VueAjoutTache((Modele) sujet);
                 fenetreAjout.showAndWait();
+            }
+        });
+
+        btnAjouterSousTache.setOnAction(e -> {
+            TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
+
+            if (item != null && item.getValue() instanceof TachePrimaire) {
+                TachePrimaire parent = (TachePrimaire) item.getValue();
+
+                if (sujet instanceof Modele) {
+                    new VueAjoutSousTache((Modele) sujet, parent).showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Sélection invalide");
+                alert.setContentText("Veuillez sélectionner une Tâche Primaire pour lui ajouter une sous-tâche.");
+                alert.showAndWait();
             }
         });
 
