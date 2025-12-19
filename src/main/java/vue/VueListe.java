@@ -66,19 +66,19 @@ public class VueListe extends VBox implements Observateur {
 
                     // Fond clair par défaut
                     String styleNormal = """
-                -fx-background-color: #f3f4f6;
-                -fx-text-fill: #374151;
-                -fx-border-color: #e5e7eb;
-                -fx-padding: 6;
-            """;
+                        -fx-background-color: #f3f4f6;
+                        -fx-text-fill: #374151;
+                        -fx-border-color: #e5e7eb;
+                        -fx-padding: 6;
+                    """;
 
                     // Fond spécial si sélectionnée
                     String styleSelected = """
-                -fx-background-color: #3b82f6;
-                -fx-text-fill: white;
-                -fx-border-color: #2563eb;
-                -fx-padding: 6;
-            """;
+                        -fx-background-color: #3b82f6;
+                        -fx-text-fill: white;
+                        -fx-border-color: #2563eb;
+                        -fx-padding: 6;
+                    """;
 
                     setStyle(isSelected() ? styleSelected : styleNormal);
 
@@ -129,7 +129,7 @@ public class VueListe extends VBox implements Observateur {
                 if (racines != null) {
                     for (Tache t : racines) {
                         TreeItem<Tache> item = new TreeItem<>(t);
-                        item.setExpanded(true);
+                        item.setExpanded(false);
                         if (t instanceof TachePrimaire tp && tp.getDependances() != null) {
                             for (Tache dep : tp.getDependances()) {
                                 if (dep instanceof SousTache) item.getChildren().add(new TreeItem<>(dep));

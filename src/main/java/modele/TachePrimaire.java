@@ -74,12 +74,22 @@ public class TachePrimaire extends Tache {
     public String toString(int indent) {
         String res = super.toString(indent);
 
-        if(!this.dependances.isEmpty()){
+        boolean contientDependance = false;
+        for (Tache t : this.dependances) {
+            if (t instanceof TachePrimaire) {
+                contientDependance = true;
+                break;
+            }
+        }
+
+        if (contientDependance) {
             res+= "\t".repeat(indent) + "Dépendances : " + '\n';
         }
 
         for (Tache t : dependances) {
-            res += t.toString(indent + 1);
+            if (t instanceof TachePrimaire) {
+                res += t.toString(indent + 1);
+            }
         }
 
         return res;
