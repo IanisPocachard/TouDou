@@ -1,0 +1,14 @@
+@startuml
+@startuml
+actor Utilisateur
+hide footbox
+participant "vb :VBox" as Colonne
+participant "ddc : DragDropController"
+participant "m : Modele"
+
+Utilisateur -> Colonne : DragDropped
+Colonne -> "ddc : DragDropController" : handler(event)
+"ddc : DragDropController" -> "m : Modele" : changerEtat(idTache, etatCible)
+"ddc : DragDropController" -> "e:event" : setDropCompleted(true)
+"ddc : DragDropController" -> "e:event" : consume()
+@enduml

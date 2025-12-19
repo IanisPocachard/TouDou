@@ -1,0 +1,14 @@
+@startuml
+actor Utilisateur
+hide footbox
+participant "l : Label" as Carte
+participant "ddc : DragDropController"
+participant "TachePrimaire"
+
+Utilisateur -> Carte : DragDetected
+Carte -> DragDropController : handler(event)
+DragDropController -> Carte : startDragAndDrop(MOVE)
+"ddc : DragDropController" -> TachePrimaire : getId()
+
+"ddc : DragDropController" -> event : consume()
+@enduml
