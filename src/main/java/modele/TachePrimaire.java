@@ -88,7 +88,7 @@ public class TachePrimaire extends Tache {
 
         for (Tache t : dependances) {
             if (t instanceof TachePrimaire) {
-                res += t.toString(indent + 1);
+                res += "\t" + t.getNom();
             }
         }
 
