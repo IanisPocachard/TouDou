@@ -6,34 +6,27 @@ import javafx.scene.layout.VBox;
 import modele.Modele;
 import modele.TachePrimaire;
 
-import java.util.Map;
-
 public class DragDropController {
 
     private Modele modele;
-    private Map<Label, TachePrimaire> carteMap; // permet de retrouver la tâche associée à chaque Label
 
-    public DragDropController(Modele modele, Map<Label, TachePrimaire> carteMap) {
+    public DragDropController(Modele modele) {
         this.modele = modele;
-        this.carteMap = carteMap;
     }
 
-    // rend une carte draggable
+    // Rend une carte déplaçable
     public void makeDraggable(Label carte) {
-        TachePrimaire tache = carteMap.get(carte);
-
         carte.setOnDragDetected(event -> {
             Dragboard db = carte.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-
-            // on met l'ID de la tâche dans le dragboard
-            content.putString(String.valueOf(tache.getId()));
+            content.putString(carte.getText());
             db.setContent(content);
+
             event.consume();
         });
     }
 
-    // rend une colonne droppable
+    // Rend une colonne capable de recevoir une carte
     public void makeDroppable(VBox colonne, int etatCible) {
         colonne.setOnDragOver(event -> {
             if (event.getGestureSource() != colonne && event.getDragboard().hasString()) {
@@ -42,22 +35,23 @@ public class DragDropController {
             event.consume();
         });
 
-        colonne.setOnDragEntered(event -> {
-            event.consume();
-        });
-
-        colonne.setOnDragExited(event -> {
-            event.consume();
-        });
-
         colonne.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;
+
             if (db.hasString()) {
-                int idTache = Integer.parseInt(db.getString());
-                modele.changerEtat(idTache, etatCible); // mise à jour du modèle
-                success = true;
+                if (event.getGestureSource() instanceof Label) {
+                    Label carteDeplacee = (Label) event.getGestureSource();
+
+                    if (carteDeplacee.getUserData() instanceof TachePrimaire) {
+                        TachePrimaire tache = (TachePrimaire) carteDeplacee.getUserData();
+
+                        modele.changerEtat(tache.getId(), etatCible);
+                        success = true;
+                    }
+                }
             }
+
             event.setDropCompleted(success);
             event.consume();
         });

@@ -55,4 +55,10 @@ public class Modele implements Sujet {
     public Tache getTache(int index) {
         return manager.read(index);
     }
+
+    public void ajouterTache(Tache t) {
+        this.taches.add(t);
+        this.manager.create(t);
+        this.notifierObservateurs();
+    }
 }
