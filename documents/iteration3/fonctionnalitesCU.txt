@@ -1,0 +1,9 @@
+Fonctionnalités :
+- Implémenter la gestion de l'archivage des tâches (Néo)
+- Implémenter la vue "colonne" (Néo)
+- Implémenter le drag & drop avec le changement d'état (Néo)
+- Implémenter le formulaire de tâches pour Gantt (Maxime)
+- Implémenter la création du diagramme de Gantt à partir du formulaire (Maxime)
+- Implémenter la création de tâches (Erdal)
+- Implémenter la création de sous tâche (Erdal)
+- Implémenter l'interface graphique dans la globalité (Ianis)
