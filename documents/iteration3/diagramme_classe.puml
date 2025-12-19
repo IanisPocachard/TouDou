@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface FabriqueTache{
+    fab(String, String, int): Tache
+}
+
+class FabriqueSousTache implements FabriqueTache{
+    fab(String, String, int): Tache
+}
+
+class FabriqueTachePrimaire implements FabriqueTache{
+    fab(String, String, int): Tache
+    {static} personnaliser(TachePrimaire, Date, Date): TachePrimaire
+}
+
+interface Observateur{
+    actualiser(Sujet): void
+}
+
+class VueBureau extends Hbox implements Observateur{
+    colToDo : VBox
+    colInProgress : VBox
+    colTesting : VBox
+    colDone : VBox
+
+    initialiserColonne(): void
+    creerColonne(String, String): VBox
+    actualiser(Sujet): void
+    rafraichirTache(Modele): void
+    creerCarteTache(TachePrimaire): Label
+    viderContenuColonne(VBox): void
+}
+
+class VueHistorique extends TextArea implements Observateur{
+    texte: String
+    actualiser(Sujet): void
+    ajouterLog(String): void
+}
+
+class VueListe extends VBox implements Observateur{
+    root: TreeItem<Tache>
+    treeView: TreeView<Tache>
+    btnAjouterTache: Button
+    btnAjouterSousTache: Button
+    btnSupprimer: Button
+    buildVl(): void
+    actualiser(Sujet): void
+    getSousTaches(TachePrimaire): List<Tache>
+    getTreetView(): TreeView<Tache>
+}
+
+class VueGantt{
+    afficher(List<Tache>) : void
+}
+
+class VueFormGantt{
+    afficher(Modele) : void
+}
+
+Modele"1" <--- "*"VueBureau : modele
+Modele"1" <--- "*"VueHistorique : modele
+Modele"1" <--- "*"VueListe : modele
+VueGantt ..> Tache
+VueGantt ..> TachePrimaire
+VueFormGantt ..> VueGantt
+VueFormGantt ..> Modele
+
+
+@enduml
