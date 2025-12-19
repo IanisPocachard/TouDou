@@ -22,6 +22,7 @@ public class VueListe extends VBox implements Observateur {
     private final TreeView<Tache> treeView = new TreeView<>(root);
 
     private final Button btnAjouterTache = new Button("Ajouter une tâche");
+    private final Button btnAjouterSousTache = new Button("Ajouter une sous-tâche");
     private final Button btnSupprimer = new Button("Supprimer");
 
     public VueListe(Sujet sujet) {
