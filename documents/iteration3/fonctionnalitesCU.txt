@@ -7,3 +7,12 @@ Fonctionnalités :
 - Implémenter la création de tâches (Erdal)
 - Implémenter la création de sous tâche (Erdal)
 - Implémenter l'interface graphique dans la globalité (Ianis)
+
+Cas d'utilisations :
+- Archiver une tâche
+- Déplacer une tâche dans une colonne (drag and drop)
+- Déployer ou replier les sous-tâches
+- Sélectionner des tâches pour le diagramme de Gantt
+- Générer le diagramme de Gantt
+- Afficher le diagramme de Gantt
+- Vérifier la validité d'un formulaire de création ou de modification
