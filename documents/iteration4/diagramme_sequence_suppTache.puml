@@ -1,0 +1,37 @@
+@startuml
+
+' Configuration visuelle simple
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor "Utilisateur" as User
+participant "Vue" as Vue
+participant "Controleur" as Ctrl
+participant "Modele" as Modele
+
+title Suppression Tache
+
+' 1. L'action
+User -> Vue : Clic sur "Supprimer"
+activate Vue
+Vue -> Ctrl : Lance l'action
+activate Ctrl
+
+' 2. La récupération
+Ctrl -> Vue : Récupère la tâche sélectionnée
+
+' 3. La suppression
+Ctrl -> Modele : supprimerTache(tache)
+activate Modele
+Modele -> Modele : Retire la tâche de la liste
+
+' 4. La mise à jour
+Modele -> Vue : notifierObservateurs()
+Vue -> Vue : actualiser() (Redessine la liste)
+
+deactivate Modele
+deactivate Ctrl
+deactivate Vue
+
+@enduml
