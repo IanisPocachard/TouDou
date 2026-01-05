@@ -81,9 +81,4 @@ public abstract class Tache implements Serializable {
         this.description = description;
     }
 
-    public void addDependance(Tache t) {
-        // Aucune vérification pour l'instant
-        this.dependances.add(t);
-    }
-
 }
