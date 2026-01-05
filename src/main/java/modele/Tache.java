@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public abstract class Tache implements Serializable {
 
-    private String nom;
-    private String description;
-    private int duree;
+    protected String nom;
+    protected String description;
+    protected int duree;
     protected int id;
 
     private static int compteur=0;
