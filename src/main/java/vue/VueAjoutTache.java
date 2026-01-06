@@ -40,10 +40,15 @@ public class VueAjoutTache extends Stage {
         lblDateDebut.setStyle("-fx-font-weight: bold;");
         DatePicker dpDateDebut = new DatePicker();
 
-        // date de fin
-        Label lblDateFin = new Label("Échéance");
+        // Date de fin (réelle)
+        Label lblDateFin = new Label("Date de fin");
         lblDateFin.setStyle("-fx-font-weight: bold;");
-        DatePicker dpEcheance = new DatePicker();
+        DatePicker dpDateFin = new DatePicker();
+
+        // Date d’échéance (max)
+        Label lblDateEcheance = new Label("Date d’échéance");
+        lblDateEcheance.setStyle("-fx-font-weight: bold;");
+        DatePicker dpDateEcheance = new DatePicker();
 
         // bouton valider
         Button btnValider = new Button("AJOUTER");
@@ -61,7 +66,8 @@ public class VueAjoutTache extends Stage {
                 taDescription,
                 tfDuree,
                 dpDateDebut,
-                dpEcheance,
+                dpDateFin,
+                dpDateEcheance,
                 this
         );
         btnValider.setOnAction(controleur);
@@ -71,7 +77,8 @@ public class VueAjoutTache extends Stage {
                 lblDesc, taDescription,
                 lblDuree, tfDuree,
                 lblDateDebut, dpDateDebut,
-                lblDateFin, dpEcheance,
+                lblDateFin, dpDateFin,
+                lblDateEcheance, dpDateEcheance,
                 new Separator(),
                 btnValider
         );
