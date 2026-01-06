@@ -22,12 +22,12 @@ public class VueHistorique extends TextArea implements Observateur {
 
     @Override
     public void actualiser(Sujet s) {
-        this.setText(texte);
+        if (s instanceof Modele m) {
+            String message = m.getLog();
+            if (message != null && !message.isEmpty()) {
+                String ancienTexte = this.getText();
+                this.setText(message + "\n" + ancienTexte);
+            }
+        }
     }
-
-    public void ajouterLog(String txt) {
-        this.texte += txt + "\n";
-        this.actualiser(modele);
-    }
-
 }

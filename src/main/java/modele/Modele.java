@@ -11,6 +11,7 @@ public class Modele implements Sujet {
     private ArrayList<Observateur> observateurs;
     private List<Tache> taches;
     private TacheManager manager;
+    private String log="";
 
     public Modele() {
         this.observateurs = new ArrayList<>();
@@ -38,7 +39,6 @@ public class Modele implements Sujet {
                 }
             }
         }
-        this.notifierObservateurs();
     }
     @Override
     public void notifierObservateurs() {
@@ -58,6 +58,14 @@ public class Modele implements Sujet {
 
     public void ajouterTache(Tache t) {
         this.manager.create(t);
+    }
+
+    public void logger(String message) {
+        this.log = message;
         this.notifierObservateurs();
+    }
+
+    public String getLog() {
+        return log;
     }
 }

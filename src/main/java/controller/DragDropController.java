@@ -47,13 +47,14 @@ public class DragDropController {
                         TachePrimaire tache = (TachePrimaire) carteDeplacee.getUserData();
 
                         modele.changerEtat(tache.getId(), etatCible);
+                        modele.logger("Tâche '" + tache.getNom() + "' déplacée vers l'état " + tache.getNomEtat(etatCible) + ".");
                         success = true;
                     }
                 }
             }
 
-            event.setDropCompleted(success);
-            event.consume();
+                event.setDropCompleted(success);
+                event.consume();
         });
     }
 }

@@ -11,12 +11,18 @@ public class ControlValiderSousTache {
     private Modele modele;
 
     public ControlValiderSousTache(Modele modele) {
-        this.modele = (Modele)modele;
+        this.modele = modele;
     }
 
-    public void executer(SousTache sousTache, boolean nouvelEtat) {
+    public void executer(SousTache sousTache) {
         sousTache.toggleValide();
-        modele.notifierObservateurs();
+
+        if(sousTache.getValide()) {
+            this.modele.logger("Sous-tache '" + sousTache.getNom() + "' validée");
+        }else{
+            this.modele.logger("Sous-tache '" + sousTache.getNom() + "' annuler");
+        }
+            modele.notifierObservateurs();
     }
 
 }

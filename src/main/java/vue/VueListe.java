@@ -171,7 +171,7 @@ public class VueListe extends VBox implements Observateur {
 
                                     // Connexion checkbox → contrôleur
                                     sousItem.selectedProperty().addListener((obs, oldVal, newVal) -> {
-                                        this.controlValideSousTache.executer(sousTache, newVal);
+                                        this.controlValideSousTache.executer(sousTache);
                                     });
 
                                     item.getChildren().add(sousItem);

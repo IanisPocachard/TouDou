@@ -82,6 +82,8 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
             modele.ajouterTache(tache);
             fenetre.close();
 
+            this.modele.logger("Tâche '" + tache.getNom() + "' a été créée");
+
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Erreur de saisie");

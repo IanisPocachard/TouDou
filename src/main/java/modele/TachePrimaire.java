@@ -157,4 +157,22 @@ public class TachePrimaire extends Tache {
     public void setDateEcheance(LocalDate dateEcheance) {
         this.dateEcheance = dateEcheance;
     }
+
+    public String getNomEtat(int etat){
+        switch (etat) {
+            case ARCHIVEE:
+                return "Archivée";
+            case VALIDEE:
+                return "Valide";
+
+            case A_FAIRE:
+                return "A faire";
+            case EN_COURS:
+                return "En cours";
+            case A_TESTER:
+                return "A tester";
+            default:
+                return "Etat invalide.";
+        }
+    }
 }
