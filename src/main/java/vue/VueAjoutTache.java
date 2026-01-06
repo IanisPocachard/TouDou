@@ -30,28 +30,48 @@ public class VueAjoutTache extends Stage {
         taDescription.setPromptText("Détails de la tâche...");
         taDescription.setPrefHeight(100);
 
-        // durée et date
-        Label lblDuree = new Label("Durée");
+        // durée
+        Label lblDuree = new Label("Durée (en jours)");
         lblDuree.setStyle("-fx-font-weight: bold;");
         TextField tfDuree = new TextField();
 
-        Label lblDate = new Label("Échéance");
-        lblDate.setStyle("-fx-font-weight: bold;");
+        // date de début
+        Label lblDateDebut = new Label("Date de début");
+        lblDateDebut.setStyle("-fx-font-weight: bold;");
+        DatePicker dpDateDebut = new DatePicker();
+
+        // date de fin
+        Label lblDateFin = new Label("Échéance");
+        lblDateFin.setStyle("-fx-font-weight: bold;");
         DatePicker dpEcheance = new DatePicker();
 
-        //valider
+        // bouton valider
         Button btnValider = new Button("AJOUTER");
-        btnValider.setStyle("-fx-background-color: #4169E1; -fx-text-fill: white; -fx-font-weight: bold;");
+        btnValider.setStyle(
+                "-fx-background-color: #4169E1; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-font-weight: bold;"
+        );
         btnValider.setMaxWidth(Double.MAX_VALUE);
 
-        ControlAddTache controleur = new ControlAddTache(modele, tfNom, taDescription, tfDuree, dpEcheance, this);
+        // contrôleur
+        ControlAddTache controleur = new ControlAddTache(
+                modele,
+                tfNom,
+                taDescription,
+                tfDuree,
+                dpDateDebut,
+                dpEcheance,
+                this
+        );
         btnValider.setOnAction(controleur);
 
         layout.getChildren().addAll(
                 lblNom, tfNom,
                 lblDesc, taDescription,
                 lblDuree, tfDuree,
-                lblDate, dpEcheance,
+                lblDateDebut, dpDateDebut,
+                lblDateFin, dpEcheance,
                 new Separator(),
                 btnValider
         );
