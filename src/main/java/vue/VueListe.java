@@ -1,8 +1,10 @@
 package vue;
 
+import controller.ControlValiderSousTache;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -25,9 +27,11 @@ public class VueListe extends VBox implements Observateur {
     private final Button btnAjouterSousTache = new Button("Ajouter une sous-tâche");
     private final Button btnSupprimer = new Button("Supprimer");
     private final Button btnAjouterDependance = new Button("Ajouter une dépendance");
+    private final ControlValiderSousTache controlValideSousTache;
 
     public VueListe(Sujet sujet) {
         this.sujet = sujet;
+        this.controlValideSousTache = new ControlValiderSousTache((Modele)sujet);
         buildVL();
         if (this.sujet != null) this.sujet.ajouterObservateur(this);
         actualiser(this.sujet);
@@ -55,39 +59,42 @@ public class VueListe extends VBox implements Observateur {
 
         root.setExpanded(true);
         treeView.setShowRoot(false);
-        treeView.setCellFactory(tv -> new TreeCell<>() {
+        treeView.setCellFactory(tv -> new CheckBoxTreeCell<>() {
+
             @Override
-            protected void updateItem(Tache item, boolean empty) {
+            public void updateItem(Tache item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty || item == null) {
-                    setText("");
+                    setText(null);
+                    setGraphic(null);
                     setStyle("");
-                } else {
-                    setText(item.toString());
+                    return;
+                }
+                setText(item.toString());
+                setGraphicTextGap(20);
 
-                    // Fond clair par défaut
-                    String styleNormal = """
-                        -fx-background-color: #f3f4f6;
-                        -fx-text-fill: #374151;
-                        -fx-border-color: #e5e7eb;
-                        -fx-padding: 6;
-                    """;
+                String styleNormal = """
+            -fx-background-color: #f3f4f6;
+            -fx-text-fill: #374151;
+            -fx-border-color: #e5e7eb;
+            -fx-padding: 6;
+        """;
+                String styleSelected = """
+            -fx-background-color: #3b82f6;
+            -fx-text-fill: white;
+            -fx-border-color: #2563eb;
+            -fx-padding: 6;
+        """;
 
-                    // Fond spécial si sélectionnée
-                    String styleSelected = """
-                        -fx-background-color: #3b82f6;
-                        -fx-text-fill: white;
-                        -fx-border-color: #2563eb;
-                        -fx-padding: 6;
-                    """;
+                setStyle(isSelected() ? styleSelected : styleNormal);
 
-                    setStyle(isSelected() ? styleSelected : styleNormal);
+                selectedProperty().addListener((obs, oldVal, newVal) ->
+                        setStyle(newVal ? styleSelected : styleNormal)
+                );
 
-                    // Écouter les changements de sélection pour mettre à jour le style
-                    selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                        setStyle(isNowSelected ? styleSelected : styleNormal);
-                    });
+                // 🔹 PAS de checkbox pour les tâches principales
+                if (!(getTreeItem() instanceof CheckBoxTreeItem)) {
+                    setGraphic(null);
                 }
             }
         });
@@ -154,7 +161,21 @@ public class VueListe extends VBox implements Observateur {
                         item.setExpanded(false);
                         if (t instanceof TachePrimaire tp && tp.getDependances() != null) {
                             for (Tache dep : tp.getDependances()) {
-                                if (dep instanceof SousTache) item.getChildren().add(new TreeItem<>(dep));
+                                if (dep instanceof SousTache sousTache) {
+
+                                    CheckBoxTreeItem<Tache> sousItem =
+                                            new CheckBoxTreeItem<>(sousTache);
+
+                                    // État initial synchronisé avec le modèle
+                                    sousItem.setSelected(sousTache.getValide());
+
+                                    // Connexion checkbox → contrôleur
+                                    sousItem.selectedProperty().addListener((obs, oldVal, newVal) -> {
+                                        this.controlValideSousTache.executer(sousTache, newVal);
+                                    });
+
+                                    item.getChildren().add(sousItem);
+                                }
                             }
                         }
                         root.getChildren().add(item);

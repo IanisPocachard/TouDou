@@ -16,9 +16,10 @@ public class SousTache extends Tache {
         throw new Exception("une sous-tache ne peut changer d'état");
     }
 
-    public void setValide(boolean valide){
-        this.validee = valide;
+    public void toggleValide(){
+        this.validee = !this.validee;
     }
+
 
     public String toString(int indent){
         String res="\t".repeat(indent)+ "Nom de la tache : "+nom+ '\n' + "\t".repeat(indent) + "Description de la  tache : "+description+ '\n' + "\t".repeat(indent) + '\n';
