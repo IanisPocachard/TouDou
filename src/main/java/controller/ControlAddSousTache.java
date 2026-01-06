@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modele.Modele;
 import modele.SousTache;
+import modele.Tache;
 import modele.TachePrimaire;
 
 public class ControlAddSousTache implements EventHandler<ActionEvent> {
@@ -35,22 +36,47 @@ public class ControlAddSousTache implements EventHandler<ActionEvent> {
             String description = champDescription.getText().trim();
             String dureeTexte = champDuree.getText().trim();
 
-            if (nom.isEmpty()) throw new Exception("Le nom est vide.");
-            if (dureeTexte.isEmpty()) throw new Exception("La durée est vide.");
+            if (nom.isEmpty())
+                throw new Exception("Le nom est obligatoire !");
 
-            int duree = Integer.parseInt(dureeTexte);
+            if (dureeTexte.isEmpty())
+                throw new Exception("La durée est obligatoire !");
 
-            // creation soustache
-            SousTache st = new SousTache(nom, description, duree);
+            int dureeSousTache;
+            try {
+                dureeSousTache = Integer.parseInt(dureeTexte);
+            } catch (NumberFormatException e) {
+                throw new Exception("La durée doit être un nombre !");
+            }
 
+            if (dureeSousTache <= 0)
+                throw new Exception("La durée doit être positive !");
+
+            int sommeDurees = 0;
+            for (Tache t : parent.getDependances()) {
+                if (t instanceof SousTache) {
+                    sommeDurees += t.getDuree();
+                }
+            }
+
+            if (sommeDurees + dureeSousTache > parent.getDuree()) {
+                throw new Exception(
+                        "La somme des durées des sous-tâches (" +
+                                (sommeDurees + dureeSousTache) +
+                                ") dépasse la durée de la tâche parente (" +
+                                parent.getDuree() + ")."
+                );
+            }
+
+            SousTache st = new SousTache(nom, description, dureeSousTache);
             parent.ajoutDependance(st);
 
             modele.notifierObservateurs();
-
             fenetre.close();
 
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Erreur de création de sous-tâche");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
