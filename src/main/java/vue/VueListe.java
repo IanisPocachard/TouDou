@@ -24,6 +24,7 @@ public class VueListe extends VBox implements Observateur {
     private final Button btnAjouterTache = new Button("Ajouter une tâche");
     private final Button btnAjouterSousTache = new Button("Ajouter une sous-tâche");
     private final Button btnSupprimer = new Button("Supprimer");
+    private final Button btnAjouterDependance = new Button("Ajouter une dépendance");
 
     public VueListe(Sujet sujet) {
         this.sujet = sujet;
@@ -44,6 +45,7 @@ public class VueListe extends VBox implements Observateur {
         btnAjouterTache.setStyle(styleSousBouton);
         btnAjouterSousTache.setStyle(styleSousBouton);
         btnSupprimer.setStyle(styleSousBouton);
+        btnAjouterDependance.setStyle(styleSousBouton);
 
     }
 
@@ -90,7 +92,10 @@ public class VueListe extends VBox implements Observateur {
             }
         });
 
-        HBox bar = new HBox(10, btnAjouterTache, btnAjouterSousTache, btnSupprimer);
+        HBox boutons1 = new HBox(10, btnAjouterTache, btnAjouterSousTache);
+        HBox boutons2 = new HBox(10, btnSupprimer, btnAjouterDependance);
+        VBox bar = new VBox(10, boutons1, boutons2);
+
 
         btnAjouterTache.setOnAction(e -> {
             if (sujet instanceof Modele) {
@@ -112,6 +117,23 @@ public class VueListe extends VBox implements Observateur {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("Sélection invalide");
                 alert.setContentText("Veuillez sélectionner une Tâche Primaire pour lui ajouter une sous-tâche.");
+                alert.showAndWait();
+            }
+        });
+
+        btnAjouterDependance.setOnAction(e -> {
+            TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
+
+            if (item != null && item.getValue() instanceof TachePrimaire) {
+                TachePrimaire tache1 = (TachePrimaire) item.getValue();
+
+                if (sujet instanceof Modele) {
+                    new VueAjoutDependance((Modele) sujet, tache1).showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Sélection invalide");
+                alert.setContentText("Veuillez sélectionner une Tâche Primaire pour lui ajouter une dépendance.");
                 alert.showAndWait();
             }
         });

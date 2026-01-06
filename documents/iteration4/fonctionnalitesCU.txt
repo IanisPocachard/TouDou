@@ -1,0 +1,12 @@
+Fonctionnalités :
+- Corrections de cas spécifiques lors de la création des tâches (Maxime)
+- Supression d'une tâche (Erdal)
+- Voir les tâches archivées (Erdal)
+- Validation sous-tâche (Néo)
+- Implémentation Vue Historique (Néo)
+- Implémenter les dépendances entre 2 tâches (Ianis)
+
+Cas d'utilisations :
+- Ajouter une dépendance entre 2 tâches
+- Vérifier l'absence de cycles dans les dépendances
+- Supprimer une tâche

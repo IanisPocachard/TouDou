@@ -1,17 +1,18 @@
 package modele;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class Tache implements Serializable {
 
-    private String nom;
-    private String description;
-    private int duree;
+    protected String nom;
+    protected String description;
+    protected int duree;
     protected int id;
 
     private static int compteur=0;
 
-
+    private ArrayList<Tache> dependances;
 
     // Pour éviter les problèmes de sérialisation
     private static final long serialVersionUID = 1L;
@@ -25,6 +26,7 @@ public abstract class Tache implements Serializable {
             throw new Exception("Vous tenez de créer une nouvelle tâche avec des mauvais paramètres !");
         }
         this.id=compteur++;
+        this.dependances = new ArrayList<>();
     }
 
     /**
@@ -78,4 +80,5 @@ public abstract class Tache implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

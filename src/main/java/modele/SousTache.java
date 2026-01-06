@@ -19,4 +19,14 @@ public class SousTache extends Tache {
     public void setValide(boolean valide){
         this.validee = valide;
     }
+
+    public String toString(int indent){
+        String res="\t".repeat(indent)+ "Nom de la tache : "+nom+ '\n' + "\t".repeat(indent) + "Description de la  tache : "+description+ '\n' + "\t".repeat(indent) + '\n';
+        if(this.getValide()){
+            res+="Etat : validé";
+        }else{
+            res +="Etat : à faire";
+        }
+        return res;
+    }
 }
