@@ -4,15 +4,14 @@ import controller.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Modele;
-import vue.VueBureau;
-import vue.VueFormGantt;
-import vue.VueHistorique;
-import vue.VueListe;
+import vue.*;
 
 public class Main extends Application {
 
@@ -85,6 +84,28 @@ public class Main extends Application {
 
         ControlBtnKanban ctrlKanban = new ControlBtnKanban(modele);
         btnKanban.setOnAction(ctrlKanban);
+
+        // #######################
+        // # MENU SUR CLIC DROIT #
+        // #######################
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem itemAjouterTache = new MenuItem("Ajouter une tâche");
+        MenuItem itemAjouterSousTache = new MenuItem("Ajouter une sous-tâche");
+        MenuItem itemAjouterDependance = new MenuItem("Ajouter une dépendance");
+        MenuItem itemArchiver = new MenuItem("Archiver la tâche");
+        MenuItem itemSupprimerTache = new MenuItem("Supprimer la tâche");
+
+        itemAjouterTache.setOnAction(new ControlFormAddTache(modele));
+        itemAjouterSousTache.setOnAction(new ControlFormAddSousTache(modele, liste.getTacheSelectionnee()));
+
+        contextMenu.getItems().addAll(itemAjouterTache, itemAjouterSousTache, itemAjouterDependance, itemArchiver, itemSupprimerTache);
+
+        liste.setOnContextMenuRequested(event -> {
+            contextMenu.show(liste, event.getScreenX(), event.getScreenY());
+        });
+
+        liste.setOnMousePressed(e -> contextMenu.hide());
+
 
         // ##############################
         // # AJOUT DE TOUS LES ELEMENTS #
