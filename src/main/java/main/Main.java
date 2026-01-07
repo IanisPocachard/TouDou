@@ -1,6 +1,6 @@
 package main;
 
-import controller.ControlBtnArchives;
+import controller.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -79,6 +79,12 @@ public class Main extends Application {
 
         ControlBtnArchives ctrlArchives = new ControlBtnArchives(modele);
         btnTachesArchive.setOnAction(ctrlArchives);
+
+        ControlBtnListeTaches ctrlListeTaches = new ControlBtnListeTaches(modele);
+        btnListeTaches.setOnAction(ctrlListeTaches);
+
+        ControlBtnKanban ctrlKanban = new ControlBtnKanban(modele);
+        btnKanban.setOnAction(ctrlKanban);
 
         // ##############################
         // # AJOUT DE TOUS LES ELEMENTS #
