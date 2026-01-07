@@ -16,7 +16,7 @@ public interface Manager {
 
     public boolean update(int index, String nom, String description, int duree);
 
-    public boolean update(int index, String nom, String description, int duree, LocalDate dateDebut, LocalDate dateFin, LocalDate dateEcheance);
+    public boolean update(int index, String nom, String description, int duree, LocalDate dateDebut, LocalDate dateEcheance);
 
     public boolean delete(int index);
 

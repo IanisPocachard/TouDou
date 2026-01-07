@@ -42,17 +42,20 @@ public class ControlAddDependance implements EventHandler<ActionEvent> {
                 throw new Exception("Une tâche ne peut pas dépendre d'elle-même.");
 
             LocalDate debutA = tache1.getDateDebut();
-            LocalDate finA = tache1.getDateFin();
-
+            LocalDate finA   = tache1.getDateEcheance();
             LocalDate debutB = tp2.getDateDebut();
-            LocalDate finB = tp2.getDateFin();
+            LocalDate finB   = tp2.getDateEcheance();
 
             if (debutA.equals(debutB) && finA.equals(finB)) {
-                throw new Exception("Deux tâches ayant le même intervalle réel ne peuvent pas être liées par une dépendance.");
+                throw new Exception(
+                        "Deux tâches ayant le même intervalle temporel ne peuvent pas être liées par une dépendance."
+                );
             }
 
             if (finB.isAfter(debutA)) {
-                throw new Exception("Dépendance invalide : la tâche dépendante commence avant la fin réelle de la tâche dont elle dépend.");
+                throw new Exception(
+                        "Dépendance invalide : la tâche dépendante commence avant la fin de la tâche dont elle dépend."
+                );
             }
 
             tache1.ajoutDependance(tp2);
