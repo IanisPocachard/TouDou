@@ -44,10 +44,10 @@ public class VueGantt {
         LocalDate max = taches.get(0).getDateEcheance();
 
         for (TachePrimaire tp : taches) {
-            if (tp.getDateDebut().isBefore(min)){
+            if (tp.getDateDebut().isBefore(min)) {
                 min = tp.getDateDebut();
             }
-            if (tp.getDateEcheance().isAfter(max)){
+            if (tp.getDateEcheance().isAfter(max)) {
                 max = tp.getDateEcheance();
             }
         }
@@ -55,7 +55,7 @@ public class VueGantt {
         int jours = (int) ChronoUnit.DAYS.between(min, max) + 1;
 
         GridPane grid = new GridPane();
-        grid.setHgap(2);
+        grid.setHgap(0);
         grid.setVgap(8);
         grid.setPadding(new Insets(10));
 
@@ -83,6 +83,7 @@ public class VueGantt {
             grid.add(lab, i + 1, 0);
         }
 
+        // lignes avec barres
         int ligne = 1;
         for (TachePrimaire tp : taches) {
 
@@ -112,14 +113,18 @@ public class VueGantt {
 
             final double[] decalageSouris = new double[1];
             barre.setOnMousePressed(e -> decalageSouris[0] = e.getX());
+
             barre.setOnMouseDragged(e -> {
                 double newX = barre.getLayoutX() + e.getX() - decalageSouris[0];
                 double maxX = largeurZone - barre.getWidth();
-                barre.setLayoutX(Math.max(0, Math.min(newX, maxX)));
+                newX = Math.round(newX / LARGEUR_JOUR) * LARGEUR_JOUR;
+                newX = Math.max(0, Math.min(newX, maxX));
+                barre.setLayoutX(newX);
             });
 
             zone.getChildren().addAll(fond, barre);
             grid.add(zone, decalageDebut + 1, ligne);
+
             ligne++;
         }
 
