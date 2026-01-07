@@ -1,6 +1,8 @@
 package modele;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class TacheSerializer {
@@ -30,6 +32,8 @@ public class TacheSerializer {
     public static void ecrireFichier(List<Tache> taches) throws Exception {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(chemin))) {
             oos.writeObject(taches);
+        } catch (FileNotFoundException fnf) {
+            Files.createFile(Path.of("resources/taches.toudou"));
         }
     }
 
