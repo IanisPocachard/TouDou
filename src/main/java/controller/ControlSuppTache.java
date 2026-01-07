@@ -61,6 +61,7 @@ public class ControlSuppTache implements EventHandler<ActionEvent> {
                 }
             }
         }
+        modele.logger("La tâche '" + tacheASupprimer.getNom() + "' a été supprimée.");
     }
 
     private void afficherAlerte(String titre, String message) {
