@@ -60,6 +60,12 @@ public class Modele implements Sujet {
         this.manager.create(t);
     }
 
+    public void supprimerTache(Tache t) {
+        if (this.taches.remove(t)) {
+            notifierObservateurs();
+        }
+    }
+
     public void logger(String message) {
         this.log = message;
         this.notifierObservateurs();

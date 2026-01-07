@@ -111,6 +111,12 @@ public class VueListe extends VBox implements Observateur {
             }
         });
 
+        btnSupprimer.setOnAction(e -> {
+            if (sujet instanceof Modele) {
+                new controleur.ControlSuppTache((Modele) sujet, treeView).handle(e);
+            }
+        });
+
         btnAjouterSousTache.setOnAction(e -> {
             TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
 
