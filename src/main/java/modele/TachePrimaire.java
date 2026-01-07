@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class TachePrimaire extends Tache {
     private LocalDate dateDebut;
-    private LocalDate dateFin;
     private LocalDate dateEcheance;
     private int etat;
 
@@ -22,22 +21,13 @@ public class TachePrimaire extends Tache {
     //Partie composite
     private List<Tache> dependances;
 
-    public TachePrimaire(String nom, String description, int duree, LocalDate dateDebut, LocalDate dateFin, LocalDate dateEcheance) throws Exception {
+    public TachePrimaire(String nom, String description, int duree, LocalDate dateDebut, LocalDate dateEcheance) throws Exception {
         super(nom, description, duree);
-        if (dateDebut == null || dateFin == null || dateEcheance == null) {
-            throw new Exception("Les dates ne peuvent pas être nulles");
-        }
-        if (dateFin.isBefore(dateDebut)) {
-            throw new Exception("La date de fin doit être après la date de début");
-        }
-        if (dateEcheance.isBefore(dateFin)) {
-            throw new Exception("La date d’échéance doit être après ou égale à la date de fin");
-        }
         this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
         this.dateEcheance = dateEcheance;
-        this.dependances = new ArrayList<>();
+        this.dependances = new ArrayList<Tache>();
         this.etat = A_FAIRE;
+
     }
 
     public void ajoutDependance(Tache tache) throws Exception {
@@ -78,7 +68,6 @@ public class TachePrimaire extends Tache {
 
         return false;
     }
-
     /**
      * recupere la date de debut de la tâche
      * @return dateDebut
@@ -89,14 +78,6 @@ public class TachePrimaire extends Tache {
 
     /**
      * recupere la date de fin de la tâche
-     * @return dateFin
-     */
-    public LocalDate getDateFin() {
-        return dateFin;
-    }
-
-    /**
-     * recupere la date d'echance de la tâche
      * @return dateEcheance
      */
     public LocalDate getDateEcheance() {
@@ -181,12 +162,6 @@ public class TachePrimaire extends Tache {
 
     public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
-    }
-
-    public void setDateFin(LocalDate dateFin) throws Exception {
-        if (dateFin.isBefore(dateDebut) || dateFin.isAfter(dateEcheance))
-            throw new Exception("Date de fin invalide.");
-        this.dateFin = dateFin;
     }
 
     public void setDateEcheance(LocalDate dateEcheance) {

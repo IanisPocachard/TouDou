@@ -10,7 +10,7 @@ public class FabriqueTachePrimaire implements FabriqueTache {
 
     @Override
     public Tache fab(String nom, String description, int duree) throws Exception {
-        return new TachePrimaire(nom, description, duree, null, null, null);
+        return new TachePrimaire(nom, description, duree, null, null);
     }
 
     public static TachePrimaire personnaliser(TachePrimaire tache, LocalDate dateDebut, LocalDate dateEcheance) {
