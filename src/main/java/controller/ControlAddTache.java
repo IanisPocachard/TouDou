@@ -17,7 +17,7 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
     private TextArea champDescription;
     private TextField champDuree;
     private DatePicker champDateDebut;
-    private DatePicker champDateEcheance;
+    private DatePicker champDateFin;
     private Stage fenetre;
 
     // Constructeur
@@ -27,7 +27,7 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
         this.champDescription = desc;
         this.champDuree = duree;
         this.champDateDebut = dateDebut;
-        this.champDateEcheance = dateFin;
+        this.champDateFin = dateFin;
         this.fenetre = fenetre;
     }
 
@@ -36,47 +36,45 @@ public class ControlAddTache implements EventHandler<ActionEvent> {
         try {
             String nom = champNom.getText().trim();
             String description = champDescription.getText().trim();
-            String dureeTexte = champDuree.getText().trim();
 
             if (nom.isEmpty())
                 throw new Exception("Le nom de la tâche est obligatoire !");
 
-            if (dureeTexte.isEmpty())
-                throw new Exception("La durée est obligatoire !");
-
             int duree;
             try {
-                duree = Integer.parseInt(dureeTexte);
+                duree = Integer.parseInt(champDuree.getText().trim());
             } catch (NumberFormatException e) {
                 throw new Exception("La durée doit être un nombre !");
             }
 
+            if (duree <= 0) {
+                throw new Exception("La durée doit être strictement positive !");
+            }
+
             LocalDate dateDebut = champDateDebut.getValue();
-            LocalDate dateFin = champDateEcheance.getValue();
+            LocalDate dateFin = champDateFin.getValue();
 
-            if (dateDebut == null || dateFin == null)
+            if (dateDebut == null || dateFin == null) {
                 throw new Exception("Les dates de début et de fin doivent être renseignées !");
+            }
 
-            if (dateFin.isBefore(dateDebut))
+            if (dateFin.isBefore(dateDebut)) {
                 throw new Exception("La date de fin doit être après la date de début !");
+            }
 
-            long nbJours = ChronoUnit.DAYS.between(dateDebut, dateFin);
+            long nbJours = ChronoUnit.DAYS.between(dateDebut, dateFin) + 1;
 
-            if (nbJours < duree)
-                throw new Exception("La durée dépasse l'intervalle entre la date de début et la date de fin !");
+            if (nbJours < duree) {
+                throw new Exception("La durée dépasse l’intervalle entre la date de début et la date de fin !");
+            }
 
-            TachePrimaire nouvelleTache = new TachePrimaire(
-                    nom,
-                    description,
-                    duree,
-                    dateDebut,
-                    dateFin
-            );
+            TachePrimaire nouvelleTache = new TachePrimaire(nom, description, duree, dateDebut, dateFin);
 
             modele.ajouterTache(nouvelleTache);
-            fenetre.close();
 
-            this.modele.logger("Tâche '" + tache.getNom() + "' a été créée");
+            modele.logger("Tâche '" + nouvelleTache.getNom() + "' créée");
+
+            fenetre.close();
 
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
