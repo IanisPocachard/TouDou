@@ -83,6 +83,9 @@ public class Main extends Application {
         ControlBtnListeTaches ctrlListeTaches = new ControlBtnListeTaches(modele);
         btnListeTaches.setOnAction(ctrlListeTaches);
 
+        ControlBtnKanban ctrlKanban = new ControlBtnKanban(modele);
+        btnKanban.setOnAction(ctrlKanban);
+
         // ##############################
         // # AJOUT DE TOUS LES ELEMENTS #
         // ##############################
