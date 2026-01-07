@@ -66,6 +66,18 @@ public class Modele implements Sujet {
         }
     }
 
+    public ArrayList<Tache> getTachesArchivees() {
+        ArrayList<Tache> archives = new ArrayList<>();
+        for (Tache t : this.taches) {
+            if (t instanceof TachePrimaire) {
+                if (((TachePrimaire) t).isArchivee()) {
+                    archives.add(t);
+                }
+            }
+        }
+        return archives;
+    }
+
     public void logger(String message) {
         this.log = message;
         this.notifierObservateurs();

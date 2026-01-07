@@ -1,5 +1,6 @@
 package main;
 
+import controller.ControlBtnArchives;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -75,6 +76,9 @@ public class Main extends Application {
             -fx-font-weight: bold;
         """);
         historique.getChildren().addAll(labelHistorique, new VueHistorique(modele));
+
+        ControlBtnArchives ctrlArchives = new ControlBtnArchives(modele);
+        btnTachesArchive.setOnAction(ctrlArchives);
 
         // ##############################
         // # AJOUT DE TOUS LES ELEMENTS #
