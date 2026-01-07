@@ -42,14 +42,9 @@ public class VueGantt {
         // bornes des dates
         LocalDate min = taches.get(0).getDateDebut();
         LocalDate max = taches.get(0).getDateEcheance();
-
         for (TachePrimaire tp : taches) {
-            if (tp.getDateDebut().isBefore(min)) {
-                min = tp.getDateDebut();
-            }
-            if (tp.getDateEcheance().isAfter(max)) {
-                max = tp.getDateEcheance();
-            }
+            if (tp.getDateDebut().isBefore(min)) min = tp.getDateDebut();
+            if (tp.getDateEcheance().isAfter(max)) max = tp.getDateEcheance();
         }
 
         int jours = (int) ChronoUnit.DAYS.between(min, max) + 1;
@@ -73,7 +68,7 @@ public class VueGantt {
             grid.getColumnConstraints().add(colJour);
         }
 
-        // entête
+        // entête des dates
         grid.add(new Label("Tâches"), 0, 0);
         for (int i = 0; i < jours; i++) {
             LocalDate date = min.plusDays(i);
@@ -92,7 +87,6 @@ public class VueGantt {
             int decalageDebut = (int) ChronoUnit.DAYS.between(min, tp.getDateDebut());
             int decalageEcheance = (int) ChronoUnit.DAYS.between(min, tp.getDateEcheance());
             int duree = tp.getDuree();
-
             double largeurZone = (decalageEcheance - decalageDebut + 1) * LARGEUR_JOUR;
 
             Pane zone = new Pane();
@@ -101,19 +95,31 @@ public class VueGantt {
 
             Pane fond = new Pane();
             fond.setPrefSize(largeurZone, HAUTEUR);
-            fond.setStyle(
-                    "-fx-background-color: #4f46e5;" +
-                            "-fx-opacity: 0.3;" +
-                            "-fx-background-radius: 6;"
-            );
+            fond.setStyle("-fx-background-color: #e0e0e0; -fx-background-radius: 6;");
 
             Pane barre = new Pane();
             barre.setPrefSize(duree * LARGEUR_JOUR, HAUTEUR);
-            barre.setStyle("-fx-background-color: #4f46e5; -fx-background-radius: 6;");
+
+            // couleur selon l'etat
+            String couleur;
+            switch (tp.getEtat()) {
+                case TachePrimaire.A_FAIRE -> couleur = "#FFC108";     // TO DO
+                case TachePrimaire.EN_COURS -> couleur = "#FF5A08";   // IN PROGRESS
+                case TachePrimaire.A_TESTER -> couleur = "#24739B";   // TESTING
+                case TachePrimaire.VALIDEE, TachePrimaire.ARCHIVEE -> couleur = "#36CBC1"; // DONE
+                default -> couleur = "#4f46e5";                       // bleu par défaut
+            }
+            barre.setStyle("-fx-background-color: " + couleur + "; -fx-background-radius: 6;");
+
+            // durée visible sur la barre
+            Label labelDuree = new Label(duree + "j");
+            labelDuree.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
+            labelDuree.setLayoutX(3);
+            labelDuree.setLayoutY(0);
+            barre.getChildren().add(labelDuree);
 
             final double[] decalageSouris = new double[1];
             barre.setOnMousePressed(e -> decalageSouris[0] = e.getX());
-
             barre.setOnMouseDragged(e -> {
                 double newX = barre.getLayoutX() + e.getX() - decalageSouris[0];
                 double maxX = largeurZone - barre.getWidth();
