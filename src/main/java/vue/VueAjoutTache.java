@@ -83,7 +83,8 @@ public class VueAjoutTache extends Stage {
                 btnValider
         );
 
-        Scene scene = new Scene(layout, 600, 800);
+        Scene scene = new Scene(layout);
         this.setScene(scene);
+        this.setMaximized(true);
     }
 }

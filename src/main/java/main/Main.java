@@ -89,9 +89,10 @@ public class Main extends Application {
 
         screen.getChildren().addAll(boutons, elements);
 
-        Scene scene = new Scene(screen, 1000, 800);
+        Scene scene = new Scene(screen);
         primaryStage.setScene(scene);
         primaryStage.setTitle("TouDou - Tableau de bord");
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }

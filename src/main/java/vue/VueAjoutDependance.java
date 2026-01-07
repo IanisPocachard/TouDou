@@ -37,8 +37,9 @@ public class VueAjoutDependance extends Stage {
 
         layout.getChildren().addAll(lblTache, cbTaches, btnValider);
 
-        Scene scene = new Scene(layout, 300, 200);
+        Scene scene = new Scene(layout);
         this.setScene(scene);
+        this.setMaximized(true);
     }
 
 }

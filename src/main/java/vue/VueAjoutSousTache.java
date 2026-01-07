@@ -37,7 +37,8 @@ public class VueAjoutSousTache extends Stage {
 
         layout.getChildren().addAll(lblNom, tfNom, lblDesc, taDescription, lblDuree, tfDuree, btnValider);
 
-        Scene scene = new Scene(layout, 300, 400);
+        Scene scene = new Scene(layout);
         this.setScene(scene);
+        this.setMaximized(true);
     }
 }
