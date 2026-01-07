@@ -19,10 +19,9 @@ public class ControlValiderSousTache {
 
         if(sousTache.getValide()) {
             this.modele.logger("Sous-tache '" + sousTache.getNom() + "' validée");
-        }else{
+        }else {
             this.modele.logger("Sous-tache '" + sousTache.getNom() + "' annuler");
         }
-            modele.notifierObservateurs();
     }
 
 }

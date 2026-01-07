@@ -57,10 +57,11 @@ public class ControlSuppTache implements EventHandler<ActionEvent> {
                     parent.getDependances().remove(tacheASupprimer);
 
                     // on force le rafraichissement car on a modifié un objet interne
-                    modele.notifierObservateurs();
+
                 }
             }
         }
+        modele.logger("La tâche '" + tacheASupprimer.getNom() + "' a été supprimée.");
     }
 
     private void afficherAlerte(String titre, String message) {

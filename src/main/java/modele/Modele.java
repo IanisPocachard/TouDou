@@ -61,9 +61,7 @@ public class Modele implements Sujet {
     }
 
     public void supprimerTache(Tache t) {
-        if (this.taches.remove(t)) {
-            notifierObservateurs();
-        }
+        this.taches.remove(t);
     }
 
     public ArrayList<Tache> getTachesArchivees() {
