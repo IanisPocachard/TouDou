@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class TachePrimaire extends Tache {
     private LocalDate dateDebut;
@@ -39,9 +40,43 @@ public class TachePrimaire extends Tache {
         this.etat = A_FAIRE;
     }
 
-    public void ajoutDependance(Tache tache) {
-        if (tache == this) throw new IllegalArgumentException("Une tâche ne peut dépendre d'elle-même.");
-        if (!dependances.contains(tache)) dependances.add(tache);
+    public void ajoutDependance(Tache tache) throws Exception {
+        if (tache == null)
+            throw new Exception("La dépendance ne peut pas être nulle");
+
+        if (tache == this)
+            throw new Exception("Une tâche ne peut pas dépendre d'elle-même");
+
+        // Vérification de cycle : est-ce que tache dépend déjà de this ?
+        if (parcoursCycle(tache, this))
+            throw new Exception("Cycle détecté dans les dépendances");
+
+        if (!dependances.contains(tache))
+            dependances.add(tache);
+    }
+
+    private boolean parcoursCycle(Tache courante, Tache cible) {
+        return parcoursCycleRecursif(courante, cible, new ArrayList<>());
+    }
+
+    private boolean parcoursCycleRecursif(Tache courante, Tache cible, List<Tache> visitees) {
+        if (courante == cible)
+            return true;
+
+        if (visitees.contains(courante))
+            return false;
+
+        visitees.add(courante);
+
+        if (courante instanceof TachePrimaire) {
+            TachePrimaire tp = (TachePrimaire) courante;
+            for (Tache t : tp.getDependances()) {
+                if (parcoursCycleRecursif(t, cible, visitees))
+                    return true;
+            }
+        }
+
+        return false;
     }
 
     /**
