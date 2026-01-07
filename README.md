@@ -7,10 +7,10 @@
     - `org.openjfx:javafx-controls:23.0.1`
 
 ## Membres du groupe
-BOULANGER Néo
-CINAR Erdal
-CRAINCOURT Maxime
-POCACHARD Ianis
+BOULANGER Néo  
+CINAR Erdal  
+CRAINCOURT Maxime  
+POCACHARD Ianis  
 
 ## Organisation des branches
 - `dev` : branche de développement.
