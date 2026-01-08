@@ -1,17 +1,18 @@
 @startuml
-participant Controller
-participant Modele
-participant Observateur
+hide footbox
+participant "Controller : c"
+participant "Modele : m"
+participant "Observateur : o"
 
-Controller -> Modele : logger(message)
-activate Modele
+"Controller : c" -> "Modele : m" : logger(message)
+activate "Modele : m"
 
-Modele -> Modele : log = message
-Modele -> Modele : notifierObservateurs()
+"Modele : m" -> "Modele : m" : log = message
+"Modele : m" -> "Modele : m" : notifierObservateurs()
 
-loop pour chaque Observateur
-    Modele -> Observateur : actualiser(this)
+loop pour chaque "Observateur : o"
+    "Modele : m" -> "Observateur : o" : actualiser(this)
 end
 
-deactivate Modele
+deactivate "Modele : m"
 @enduml
