@@ -69,6 +69,7 @@ public class TachePrimaire extends Tache {
 
         return false;
     }
+
     /**
      * recupere la date de debut de la tâche
      * @return dateDebut
@@ -92,7 +93,6 @@ public class TachePrimaire extends Tache {
     public int getId() {
         return id;
     }
-
 
     /**
      * retourne vrai si la tache est archivée
@@ -186,7 +186,6 @@ public class TachePrimaire extends Tache {
                 return "Archivée";
             case VALIDEE:
                 return "Valide";
-
             case A_FAIRE:
                 return "A faire";
             case EN_COURS:

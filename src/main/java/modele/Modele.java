@@ -79,11 +79,11 @@ public class Modele implements Sujet {
     public void archiverTache(TachePrimaire t) {
         t.setArchivee(true);
         this.manager.saveChanges();
-        notifierObservateurs();
     }
 
     public void logger(String message) {
         this.log = message;
+        LoggerFichier.log(message);
         this.notifierObservateurs();
     }
 

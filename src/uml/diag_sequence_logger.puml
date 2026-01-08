@@ -1,0 +1,17 @@
+@startuml
+participant Controller
+participant Modele
+participant Observateur
+
+Controller -> Modele : logger(message)
+activate Modele
+
+Modele -> Modele : log = message
+Modele -> Modele : notifierObservateurs()
+
+loop pour chaque Observateur
+    Modele -> Observateur : actualiser(this)
+end
+
+deactivate Modele
+@enduml
