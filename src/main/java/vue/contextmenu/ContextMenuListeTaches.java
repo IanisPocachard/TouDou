@@ -17,7 +17,7 @@ public class ContextMenuListeTaches extends ContextMenu {
         MenuItem itemSupprimerTache = new MenuItem("Supprimer la tâche");
 
         itemAjouterTache.setOnAction(new ControlFormAddTache(modele));
-        itemAjouterSousTache.setOnAction(new ControlFormAddSousTache(modele, vueListe.getTacheSelectionnee()));
+        itemAjouterSousTache.setOnAction(new ControlFormAddSousTache(modele, vueListe));
 
         this.getItems().addAll(itemAjouterTache, itemAjouterSousTache, itemAjouterDependance, itemArchiver, itemSupprimerTache);
     }
