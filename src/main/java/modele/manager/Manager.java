@@ -1,6 +1,7 @@
 package modele.manager;
 
 import modele.Tache;
+import modele.TachePrimaire;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -14,9 +15,9 @@ public interface Manager {
 
     public List<Tache> readAll();
 
-    public boolean update(int index, String nom, String description, int duree);
+    public boolean update(Tache tache, String nom, String description, int duree);
 
-    public boolean update(int index, String nom, String description, int duree, LocalDate dateDebut, LocalDate dateEcheance);
+    public boolean update(TachePrimaire tache, String nom, String description, int duree, LocalDate dateDebut, LocalDate dateEcheance);
 
     public boolean delete(Tache tache);
 

@@ -72,39 +72,29 @@ public class TacheManager implements Manager {
     // ### UPDATE ###
     // ##############
     @Override
-    public boolean update(int index, String nom, String description, int duree) {
-        if (index < 0 || index >= taches.size()) {
-            return false;
-        }
+    public boolean update(Tache tache, String nom, String description, int duree) {
+        if (tache == null) return false;
 
-        try {
-            Tache nouvelle = new SousTache(nom, description, duree);
-            taches.set(index, nouvelle);
+        tache.setNom(nom);
+        tache.setDescription(description);
+        tache.setDuree(duree);
 
-            sauvegarder();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        sauvegarder();
+        return true;
     }
 
     @Override
-    public boolean update(int index, String nom, String description, int duree, LocalDate dateDebut, LocalDate dateEcheance) {
-        if (index < 0 || index >= taches.size()) {
-            return false;
-        }
+    public boolean update(TachePrimaire tache, String nom, String description, int duree, LocalDate dateDebut, LocalDate dateEcheance) {
+        if (tache == null) return false;
 
-        try {
-            Tache nouvelle = new TachePrimaire(nom, description, duree, dateDebut, dateEcheance);
-            taches.set(index, nouvelle);
+        tache.setNom(nom);
+        tache.setDescription(description);
+        tache.setDuree(duree);
+        tache.setDateDebut(dateDebut);
+        tache.setDateEcheance(dateEcheance);
 
-            sauvegarder();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        sauvegarder();
+        return true;
     }
 
     // ##############

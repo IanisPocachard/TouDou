@@ -58,6 +58,10 @@ public abstract class Tache implements Serializable {
 
     public abstract void setEtat(int netat)throws Exception;
 
+    public void setDuree(int duree) {
+        this.duree = duree;
+    }
+
     /**
      * Retourne sous format texte une tâche
      * @return res : état de la tâche
