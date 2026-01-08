@@ -39,6 +39,10 @@ public class TacheManager implements Manager {
         }
     }
 
+    public void saveChanges() {
+        sauvegarder();
+    }
+
     // ##############
     // ### CREATE ###
     // ##############

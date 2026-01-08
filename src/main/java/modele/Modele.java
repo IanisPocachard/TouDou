@@ -79,9 +79,8 @@ public class Modele implements Sujet {
 
     public void archiverTache(TachePrimaire t) {
         t.setArchivee(true);
-        this.manager.create(t);
+        this.manager.saveChanges();
         notifierObservateurs();
-        logger("Tâche archivée : " + t.getNom());
     }
 
     public void logger(String message) {

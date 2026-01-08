@@ -34,7 +34,7 @@ public class ControlAddArchive implements EventHandler<ActionEvent> {
             TachePrimaire tp = (TachePrimaire) tache;
 
             if (tp.isArchivee()) {
-                afficherAlerte("Info", "Cette tâche est déjà archivée.");
+                afficherAlerte("Attention", "Cette tâche est déjà archivée.");
                 return;
             }
 

@@ -174,7 +174,6 @@ public class VueListe extends VBox implements Observateur {
                 root.getChildren().clear();
                 if (racines != null) {
                     for (Tache t : racines) {
-                        if (t instanceof TachePrimaire tp1 && tp1.isArchivee()){
                             TreeItem<Tache> item = new TreeItem<>(t);
                             item.setExpanded(false);
                             if (t instanceof TachePrimaire tp && tp.getDependances() != null) {
@@ -199,7 +198,6 @@ public class VueListe extends VBox implements Observateur {
                             root.getChildren().add(item);
                         }
                     }
-                }
             });
         }
     }
