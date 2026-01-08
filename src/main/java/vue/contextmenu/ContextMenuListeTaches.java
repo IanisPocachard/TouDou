@@ -27,7 +27,31 @@ public class ContextMenuListeTaches extends ContextMenu {
         itemArchiver.setOnAction(new ControlAddArchive(modele, vueListe));
         itemSupprimerTache.setOnAction(new ControlSuppTache(modele, vueListe));
 
+        String styleItem = """
+            -fx-padding: 8 16;
+            -fx-font-size: 13px;
+            -fx-text-fill: #374151;
+        """;
+
+        itemAjouterTache.setStyle(styleItem);
+        itemAjouterSousTache.setStyle(styleItem);
+        itemAjouterDependance.setStyle(styleItem);
+        itemArchiver.setStyle(styleItem);
+        itemSupprimerTache.setStyle(styleItem);
+
         this.getItems().addAll(itemAjouterTache, itemAjouterSousTache, itemAjouterDependance, itemArchiver, itemSupprimerTache);
+
+        this.setStyle("""
+            -fx-background-color: white;
+            -fx-background-radius: 10;
+            -fx-border-radius: 10;
+            -fx-border-color: #e5e7eb;
+            -fx-border-width: 1;
+            -fx-padding: 6;
+            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0.2, 0, 4);
+        """);
+
+
     }
 
 }
