@@ -1,10 +1,13 @@
 package vue.contextmenu;
 
+import controleur.ControlSuppTache;
 import controller.ControlFormAddSousTache;
 import controller.ControlFormAddTache;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeView;
 import modele.Modele;
+import modele.Tache;
 import vue.VueListe;
 
 public class ContextMenuListeTaches extends ContextMenu {
@@ -18,6 +21,7 @@ public class ContextMenuListeTaches extends ContextMenu {
 
         itemAjouterTache.setOnAction(new ControlFormAddTache(modele));
         itemAjouterSousTache.setOnAction(new ControlFormAddSousTache(modele, vueListe));
+        itemSupprimerTache.setOnAction(new ControlSuppTache(modele, vueListe));
 
         this.getItems().addAll(itemAjouterTache, itemAjouterSousTache, itemAjouterDependance, itemArchiver, itemSupprimerTache);
     }

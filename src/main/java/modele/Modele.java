@@ -61,9 +61,17 @@ public class Modele implements Sujet {
     }
 
     public void supprimerTache(Tache t) {
-        this.manager.delete(t.getId());
+        this.manager.delete(t);
         notifierObservateurs();
     }
+
+    public void supprimerSousTache(TachePrimaire parent, Tache sousTache) {
+        if (parent != null && sousTache != null) {
+            parent.getDependances().remove(sousTache);
+            notifierObservateurs();
+        }
+    }
+
 
     public ArrayList<Tache> getTachesArchivees() {
         ArrayList<Tache> archives = new ArrayList<>();
