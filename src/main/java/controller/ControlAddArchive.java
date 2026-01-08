@@ -21,6 +21,35 @@ public class ControlAddArchive implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
 
+        if (item == null) {
+            afficherAlerte("Erreur", "Veuillez sélectionner une tâche à archiver.");
+            return;
+        }
+
+        Tache tache = item.getValue();
+
+        if (tache instanceof TachePrimaire) {
+            TachePrimaire tp = (TachePrimaire) tache;
+
+            if (tp.isArchivee()) {
+                afficherAlerte("Info", "Cette tâche est déjà archivée.");
+                return;
+            }
+
+            modele.archiverTache(tp);
+
+        } else {
+            afficherAlerte("Impossible", "Vous ne pouvez archiver qu'une tâche principale.");
+        }
+    }
+
+    private void afficherAlerte(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

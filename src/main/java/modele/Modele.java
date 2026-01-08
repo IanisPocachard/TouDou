@@ -77,6 +77,13 @@ public class Modele implements Sujet {
         return archives;
     }
 
+    public void archiverTache(TachePrimaire t) {
+        t.setArchivee(true);
+        this.manager.create(t);
+        notifierObservateurs();
+        logger("Tâche archivée : " + t.getNom());
+    }
+
     public void logger(String message) {
         this.log = message;
         this.notifierObservateurs();
