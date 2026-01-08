@@ -4,3 +4,4 @@
 *.iml
 target/
 *.toudou
+logs.txt

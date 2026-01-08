@@ -1,7 +1,7 @@
 package vue;
 
-import controller.ControlAddArchive;
-import controller.ControlValiderSousTache;
+import controleur.ControlSuppTache;
+import controller.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -111,60 +111,14 @@ public class VueListe extends VBox implements Observateur {
         HBox boutons3 = new HBox(10, btnArchiverTache);
         VBox bar = new VBox(10, boutons1, boutons2, boutons3);
 
-
-        btnAjouterTache.setOnAction(e -> {
-            if (sujet instanceof Modele) {
-                VueAjoutTache fenetreAjout = new VueAjoutTache((Modele) sujet);
-                fenetreAjout.showAndWait();
-            }
-        });
-
-        btnSupprimer.setOnAction(e -> {
-            if (sujet instanceof Modele) {
-                new controleur.ControlSuppTache((Modele) sujet, this).handle(e);
-            }
-        });
-
-        btnAjouterSousTache.setOnAction(e -> {
-            TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
-
-            if (item != null && item.getValue() instanceof TachePrimaire) {
-                TachePrimaire parent = (TachePrimaire) item.getValue();
-
-                if (sujet instanceof Modele) {
-                    new VueAjoutSousTache((Modele) sujet, parent).showAndWait();
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Sélection invalide");
-                alert.setContentText("Veuillez sélectionner une Tâche Primaire pour lui ajouter une sous-tâche.");
-                alert.showAndWait();
-            }
-        });
-
-        btnAjouterDependance.setOnAction(e -> {
-            TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
-
-            if (item != null && item.getValue() instanceof TachePrimaire) {
-                TachePrimaire tache1 = (TachePrimaire) item.getValue();
-
-                if (sujet instanceof Modele) {
-                    new VueAjoutDependance((Modele) sujet, tache1).showAndWait();
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Sélection invalide");
-                alert.setContentText("Veuillez sélectionner une Tâche Primaire pour lui ajouter une dépendance.");
-                alert.showAndWait();
-            }
-        });
-
-        // Archiver une tache
-        btnArchiverTache.setOnAction(e -> {
-            if (sujet instanceof Modele) {
-                new ControlAddArchive((Modele) sujet, this).handle(e);
-            }
-        });
+        if (sujet instanceof Modele) {
+            Modele modele = (Modele) sujet;
+            btnAjouterTache.setOnAction(new ControlFormAddTache(modele));
+            btnSupprimer.setOnAction(new ControlSuppTache(modele, this));
+            btnAjouterSousTache.setOnAction(new ControlFormAddSousTache(modele, this));
+            btnAjouterDependance.setOnAction(new ControlFormAddDependance(modele, this));
+            btnArchiverTache.setOnAction(new ControlAddArchive(modele, this));
+        }
 
         VBox.setVgrow(treeView, Priority.ALWAYS);
         getChildren().addAll(bar, treeView);
