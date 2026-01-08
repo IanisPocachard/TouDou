@@ -162,7 +162,7 @@ public class VueListe extends VBox implements Observateur {
         // Archiver une tache
         btnArchiverTache.setOnAction(e -> {
             if (sujet instanceof Modele) {
-                new ControlAddArchive((Modele) sujet, treeView).handle(e);
+                new ControlAddArchive((Modele) sujet, this).handle(e);
             }
         });
 

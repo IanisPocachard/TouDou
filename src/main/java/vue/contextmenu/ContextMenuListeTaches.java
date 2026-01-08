@@ -1,6 +1,7 @@
 package vue.contextmenu;
 
 import controleur.ControlSuppTache;
+import controller.ControlAddArchive;
 import controller.ControlFormAddDependance;
 import controller.ControlFormAddSousTache;
 import controller.ControlFormAddTache;
@@ -23,6 +24,7 @@ public class ContextMenuListeTaches extends ContextMenu {
         itemAjouterTache.setOnAction(new ControlFormAddTache(modele));
         itemAjouterSousTache.setOnAction(new ControlFormAddSousTache(modele, vueListe));
         itemAjouterDependance.setOnAction(new ControlFormAddDependance(modele, vueListe));
+        itemArchiver.setOnAction(new ControlAddArchive(modele, vueListe));
         itemSupprimerTache.setOnAction(new ControlSuppTache(modele, vueListe));
 
         this.getItems().addAll(itemAjouterTache, itemAjouterSousTache, itemAjouterDependance, itemArchiver, itemSupprimerTache);

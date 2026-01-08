@@ -8,19 +8,21 @@ import javafx.scene.control.TreeView;
 import modele.Modele;
 import modele.Tache;
 import modele.TachePrimaire;
+import vue.VueListe;
 
 public class ControlAddArchive implements EventHandler<ActionEvent> {
 
     private Modele modele;
-    private TreeView<Tache> treeView;
+    private VueListe vueListe;
 
-    public ControlAddArchive(Modele modele, TreeView<Tache> treeView) {
+    public ControlAddArchive(Modele modele, VueListe vueListe) {
         this.modele = modele;
-        this.treeView = treeView;
+        this.vueListe = vueListe;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        TreeView<Tache> treeView = vueListe.getTreeView();
         TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
 
         if (item == null) {
