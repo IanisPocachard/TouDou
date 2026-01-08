@@ -103,7 +103,6 @@ public class VueGantt {
                 case TachePrimaire.A_FAIRE -> couleur = "#FFC108";
                 case TachePrimaire.EN_COURS -> couleur = "#FF5A08";
                 case TachePrimaire.A_TESTER -> couleur = "#24739B";
-                case TachePrimaire.VALIDEE, TachePrimaire.ARCHIVEE -> couleur = "#36CBC1";
                 default -> couleur = "#4f46e5";
             }
 
