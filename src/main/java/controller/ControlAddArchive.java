@@ -39,6 +39,7 @@ public class ControlAddArchive implements EventHandler<ActionEvent> {
             }
 
             modele.archiverTache(tp);
+            modele.logger("La tache '" + tp.getNom() + "' a été archivée");
 
         } else {
             afficherAlerte("Impossible", "Vous ne pouvez archiver qu'une tâche principale.");
