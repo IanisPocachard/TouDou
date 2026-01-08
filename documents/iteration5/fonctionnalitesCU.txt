@@ -1,0 +1,4 @@
+Fonctionnalités :
+- Affichage des tâches en couleurs selon leurs état (Maxime)
+
+Cas d'utilisations :

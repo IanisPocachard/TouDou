@@ -45,10 +45,20 @@ public class DragDropController {
 
                     if (carteDeplacee.getUserData() instanceof TachePrimaire) {
                         TachePrimaire tache = (TachePrimaire) carteDeplacee.getUserData();
-
-                        modele.changerEtat(tache.getId(), etatCible);
-                        modele.logger("Tâche '" + tache.getNom() + "' déplacée vers l'état " + tache.getNomEtat(etatCible) + ".");
-                        success = true;
+                        try {
+                            tache.setEtat(etatCible); // peut lever une exception
+                            success = true;
+                            modele.logger(
+                                    "La tâche '" + tache.getNom() +
+                                            "' a été déplacée dans la colonne " +
+                                            tache.getNomEtat(etatCible)
+                            );
+                        } catch (Exception e) {
+                            success = false;
+                            modele.logger(
+                                    "Vous n'avez pas terminé vos dépendances ou sous-tâches"
+                            );
+                        }
                     }
                 }
             }

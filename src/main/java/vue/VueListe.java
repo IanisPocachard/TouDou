@@ -1,5 +1,6 @@
 package vue;
 
+import controller.ControlAddArchive;
 import controller.ControlValiderSousTache;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -27,6 +28,7 @@ public class VueListe extends VBox implements Observateur {
     private final Button btnAjouterSousTache = new Button("Ajouter une sous-tâche");
     private final Button btnSupprimer = new Button("Supprimer");
     private final Button btnAjouterDependance = new Button("Ajouter une dépendance");
+    private final Button btnArchiverTache = new Button("Archiver une tache");
     private final ControlValiderSousTache controlValideSousTache;
 
     public VueListe(Sujet sujet) {
@@ -50,6 +52,7 @@ public class VueListe extends VBox implements Observateur {
         btnAjouterSousTache.setStyle(styleSousBouton);
         btnSupprimer.setStyle(styleSousBouton);
         btnAjouterDependance.setStyle(styleSousBouton);
+        btnArchiverTache.setStyle(styleSousBouton);
 
     }
 
@@ -92,7 +95,7 @@ public class VueListe extends VBox implements Observateur {
                         setStyle(newVal ? styleSelected : styleNormal)
                 );
 
-                // 🔹 PAS de checkbox pour les tâches principales
+                // PAS de checkbox pour les tâches principales
                 if (!(getTreeItem() instanceof CheckBoxTreeItem)) {
                     setGraphic(null);
                 }
@@ -101,7 +104,8 @@ public class VueListe extends VBox implements Observateur {
 
         HBox boutons1 = new HBox(10, btnAjouterTache, btnAjouterSousTache);
         HBox boutons2 = new HBox(10, btnSupprimer, btnAjouterDependance);
-        VBox bar = new VBox(10, boutons1, boutons2);
+        HBox boutons3 = new HBox(10, btnArchiverTache);
+        VBox bar = new VBox(10, boutons1, boutons2, boutons3);
 
 
         btnAjouterTache.setOnAction(e -> {
@@ -151,6 +155,13 @@ public class VueListe extends VBox implements Observateur {
             }
         });
 
+        // Archiver une tache
+        btnArchiverTache.setOnAction(e -> {
+            if (sujet instanceof Modele) {
+                new ControlAddArchive((Modele) sujet, treeView).handle(e);
+            }
+        });
+
         VBox.setVgrow(treeView, Priority.ALWAYS);
         getChildren().addAll(bar, treeView);
     }
@@ -163,30 +174,30 @@ public class VueListe extends VBox implements Observateur {
                 root.getChildren().clear();
                 if (racines != null) {
                     for (Tache t : racines) {
-                        TreeItem<Tache> item = new TreeItem<>(t);
-                        item.setExpanded(false);
-                        if (t instanceof TachePrimaire tp && tp.getDependances() != null) {
-                            for (Tache dep : tp.getDependances()) {
-                                if (dep instanceof SousTache sousTache) {
+                            TreeItem<Tache> item = new TreeItem<>(t);
+                            item.setExpanded(false);
+                            if (t instanceof TachePrimaire tp && tp.getDependances() != null) {
+                                for (Tache dep : tp.getDependances()) {
+                                    if (dep instanceof SousTache sousTache) {
 
-                                    CheckBoxTreeItem<Tache> sousItem =
-                                            new CheckBoxTreeItem<>(sousTache);
+                                        CheckBoxTreeItem<Tache> sousItem =
+                                                new CheckBoxTreeItem<>(sousTache);
 
-                                    // État initial synchronisé avec le modèle
-                                    sousItem.setSelected(sousTache.getValide());
+                                        // État initial synchronisé avec le modèle
+                                        sousItem.setSelected(sousTache.getValide());
 
-                                    // Connexion checkbox → contrôleur
-                                    sousItem.selectedProperty().addListener((obs, oldVal, newVal) -> {
-                                        this.controlValideSousTache.executer(sousTache);
-                                    });
+                                        // Connexion checkbox → contrôleur
+                                        sousItem.selectedProperty().addListener((obs, oldVal, newVal) -> {
+                                            this.controlValideSousTache.executer(sousTache);
+                                        });
 
-                                    item.getChildren().add(sousItem);
+                                        item.getChildren().add(sousItem);
+                                    }
                                 }
                             }
+                            root.getChildren().add(item);
                         }
-                        root.getChildren().add(item);
                     }
-                }
             });
         }
     }

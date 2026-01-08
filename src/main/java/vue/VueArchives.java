@@ -29,7 +29,7 @@ public class VueArchives extends Stage {
             listeVisuelle.getItems().add("Aucune tâche archivée.");
         } else {
             for (Tache t : lesArchives) {
-                listeVisuelle.getItems().add(t.getNom() + " (" + t.getDuree() + " min)");
+                listeVisuelle.getItems().add(t.getNom() + " (" + t.getDuree() + " jours)");
             }
         }
 

@@ -62,7 +62,6 @@ public class Modele implements Sujet {
 
     public void supprimerTache(Tache t) {
         this.manager.delete(t.getId());
-        notifierObservateurs();
     }
 
     public ArrayList<Tache> getTachesArchivees() {
@@ -75,6 +74,12 @@ public class Modele implements Sujet {
             }
         }
         return archives;
+    }
+
+    public void archiverTache(TachePrimaire t) {
+        t.setArchivee(true);
+        this.manager.saveChanges();
+        notifierObservateurs();
     }
 
     public void logger(String message) {

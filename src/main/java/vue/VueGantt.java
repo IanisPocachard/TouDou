@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Tache;
@@ -19,98 +20,129 @@ import java.util.List;
 
 public class VueGantt {
 
+    private static final int LARGEUR_JOUR = 30;
+    private static final int HAUTEUR = 18;
+
     public static void afficher(List<Tache> selection) {
 
-        // garder uniquement les tâches primaires qui ont des dates
         List<TachePrimaire> taches = new ArrayList<>();
         for (Tache t : selection) {
-            if (t instanceof TachePrimaire tp) {
-                if (tp.getDateDebut() != null && tp.getDateEcheance() != null) {
-                    taches.add(tp);
-                }
+            if (t instanceof TachePrimaire tp && tp.getDateDebut() != null && tp.getDateEcheance() != null) {
+                taches.add(tp);
             }
         }
 
         if (taches.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Aucune tâche primaire avec dates (date début + date échéance)\n" +
-                            "Ajoute des dates aux tâches pour afficher le Gantt !").showAndWait();
+            new Alert(Alert.AlertType.WARNING, "Aucune tâche primaire avec dates").showAndWait();
             return;
         }
 
-        // min et max sur les dates
+        // bornes des dates
         LocalDate min = taches.get(0).getDateDebut();
         LocalDate max = taches.get(0).getDateEcheance();
-
         for (TachePrimaire tp : taches) {
-            LocalDate start = tp.getDateDebut();
-            LocalDate end   = tp.getDateEcheance();
-
-            if (start.isBefore(min)) min = start;
-            if (end.isAfter(max)) max = end;
+            if (tp.getDateDebut().isBefore(min)){
+                min = tp.getDateDebut();
+            }
+            if (tp.getDateEcheance().isAfter(max)){
+                max = tp.getDateEcheance();
+            }
         }
 
-        int days = (int) (ChronoUnit.DAYS.between(min, max) + 1);
+        int jours = (int) ChronoUnit.DAYS.between(min, max) + 1;
 
-        // grille
         GridPane grid = new GridPane();
-        grid.setHgap(4);
-        grid.setVgap(6);
+        grid.setHgap(0);
+        grid.setVgap(8);
         grid.setPadding(new Insets(10));
 
+        // colonne noms
+        ColumnConstraints colNom = new ColumnConstraints();
+        colNom.setPrefWidth(120);
+        grid.getColumnConstraints().add(colNom);
 
-
-        // header dates
-        grid.add(new Label("Tâches"), 0, 0);
-        for (int c = 0; c < days; c++) {
-            LocalDate d = min.plusDays(c);
-            Label lab = new Label(d.getDayOfMonth() + "/" + d.getMonthValue());
-            lab.setStyle("-fx-font-size: 10px; -fx-opacity: 0.75;");
-
-            if (days <= 40 || c % 2 == 0) {
-                grid.add(lab, c + 1, 0);
-            }
+        // colonnes jours
+        for (int i = 0; i < jours; i++) {
+            ColumnConstraints colJour = new ColumnConstraints();
+            colJour.setPrefWidth(LARGEUR_JOUR);
+            colJour.setMinWidth(LARGEUR_JOUR);
+            colJour.setMaxWidth(LARGEUR_JOUR);
+            grid.getColumnConstraints().add(colJour);
         }
 
-        // barres
+        // entête des dates
+        grid.add(new Label("Tâches"), 0, 0);
+        for (int i = 0; i < jours; i++) {
+            LocalDate date = min.plusDays(i);
+            Label lab = new Label(date.getDayOfMonth() + "/" + date.getMonthValue());
+            lab.setMinWidth(LARGEUR_JOUR);
+            lab.setStyle("-fx-font-size: 10px; -fx-alignment: center;");
+            grid.add(lab, i + 1, 0);
+        }
+
+        // lignes avec barres
         int ligne = 1;
         for (TachePrimaire tp : taches) {
-            LocalDate debut = tp.getDateDebut();
-            LocalDate fin = tp.getDateEcheance();
 
-            // sécurité si fin < debut
-            if (fin.isBefore(debut)) {
-                fin = debut;
+            grid.add(new Label(tp.getNom()), 0, ligne);
+
+            int decalageDebut = (int) ChronoUnit.DAYS.between(min, tp.getDateDebut());
+            int decalageEcheance = (int) ChronoUnit.DAYS.between(min, tp.getDateEcheance());
+            int duree = tp.getDuree();
+            double largeurZone = (decalageEcheance - decalageDebut + 1) * LARGEUR_JOUR;
+
+            Pane zone = new Pane();
+            zone.setPrefHeight(HAUTEUR + 6);
+            zone.setPrefWidth(largeurZone);
+
+            Pane fond = new Pane();
+            fond.setPrefSize(largeurZone, HAUTEUR);
+            fond.setStyle("-fx-background-color: #e0e0e0; -fx-background-radius: 6;");
+
+            Pane barre = new Pane();
+            barre.setPrefSize(duree * LARGEUR_JOUR, HAUTEUR);
+
+            // couleur selon l'etat
+            String couleur;
+            switch (tp.getEtat()) {
+                case TachePrimaire.A_FAIRE -> couleur = "#FFC108"; // TO DO
+                case TachePrimaire.EN_COURS -> couleur = "#FF5A08"; // IN PROGRESS
+                case TachePrimaire.A_TESTER -> couleur = "#24739B"; // TESTING
+                case TachePrimaire.VALIDEE, TachePrimaire.ARCHIVEE -> couleur = "#36CBC1"; // DONE
+                default -> couleur = "#4f46e5"; // bleu par défaut
             }
+            barre.setStyle("-fx-background-color: " + couleur + "; -fx-background-radius: 6;");
 
-            int decalage = (int) ChronoUnit.DAYS.between(min, debut);
-            int largeur = tp.getDuree();
+            // durée visible sur la barre
+            Label labelDuree = new Label(duree + "j");
+            labelDuree.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
+            labelDuree.setLayoutX(3);
+            labelDuree.setLayoutY(0);
+            barre.getChildren().add(labelDuree);
 
-            Label name = new Label(tp.getNom());
-            name.setStyle("-fx-font-weight: bold;");
-            grid.add(name, 0, ligne);
+            final double[] decalageSouris = new double[1];
+            barre.setOnMousePressed(e -> decalageSouris[0] = e.getX());
+            barre.setOnMouseDragged(e -> {
+                double newX = barre.getLayoutX() + e.getX() - decalageSouris[0];
+                double maxX = largeurZone - barre.getWidth();
+                newX = Math.round(newX / LARGEUR_JOUR) * LARGEUR_JOUR;
+                newX = Math.max(0, Math.min(newX, maxX));
+                barre.setLayoutX(newX);
+            });
 
-            Label bar = new Label(" ");
-            bar.setMaxWidth(Double.MAX_VALUE);
-            bar.setMinHeight(18);
-            bar.setStyle("-fx-background-color: #4f46e5; -fx-background-radius: 6;");
-            bar.setPadding(new Insets(0, 4, 0, 4));
-            grid.add(bar, decalage + 1, ligne, largeur, 1);
+            zone.getChildren().addAll(fond, barre);
+            grid.add(zone, decalageDebut + 1, ligne);
 
             ligne++;
         }
 
-        // fenêtre
         ScrollPane scroll = new ScrollPane(grid);
-        scroll.setFitToWidth(true);
-        scroll.setFitToHeight(true);
-
         VBox root = new VBox(scroll);
-        root.setPadding(new Insets(10));
-        VBox.setVgrow(scroll, javafx.scene.layout.Priority.ALWAYS);
 
         Stage stage = new Stage();
         stage.setTitle("Diagramme de Gantt");
-        stage.setScene(new Scene(root, 900, 600));
+        stage.setScene(new Scene(root));
+        stage.setMaximized(true);
         stage.show();
     }
 }

@@ -10,6 +10,7 @@ public class TachePrimaire extends Tache {
     private LocalDate dateDebut;
     private LocalDate dateEcheance;
     private int etat;
+    private boolean archivee = false;
 
 
     public static final int A_FAIRE=1;
@@ -27,7 +28,7 @@ public class TachePrimaire extends Tache {
         this.dateEcheance = dateEcheance;
         this.dependances = new ArrayList<Tache>();
         this.etat = A_FAIRE;
-
+        this.archivee = false;
     }
 
     public void ajoutDependance(Tache tache) throws Exception {
@@ -98,7 +99,14 @@ public class TachePrimaire extends Tache {
      * @return archivee
      */
     public boolean isArchivee() {
-        return this.etat==ARCHIVEE;
+        return this.archivee;
+    }
+
+    public void setArchivee(boolean archivee) {
+        this.archivee = archivee;
+        if (archivee) {
+            this.etat = ARCHIVEE;
+        }
     }
 
     public String toString(){
@@ -142,6 +150,10 @@ public class TachePrimaire extends Tache {
             }
         }
         this.etat = netat; // on prend l'état passé en parametre
+
+        if (this.etat == ARCHIVEE) {
+            this.archivee = true;
+        }
     }
 
     public int getEtat(){
@@ -185,4 +197,5 @@ public class TachePrimaire extends Tache {
                 return "Etat invalide.";
         }
     }
+
 }
