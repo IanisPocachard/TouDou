@@ -24,38 +24,3 @@ public class LoggerFichier {
         }
     }
 }
-
-hide ControlAddArchive
-hide ControlAddDependances
-hide ControlAddSousTache
-hide ControlAddTache
-hide ControlBtnArchives
-hide ControlBtnKanbas
-hide ControlBtnListeTaches
-hide ControlSuppTache
-hide ControlValideSousTache
-hide DragDropController
-hide VueListe
-hide VueBureau
-hide VBox
-hide Hbox
-hide Observateur
-hide TextArea
-hide VueHistorique
-hide Stage
-hide VueAjoutDependance
-hide VueAjoutSousTache
-hide VueAjoutTache
-hide VueArchives
-hide LoggerFichier
-hide TacheSerializer
-hide Manager
-hide TacheManager
-hide FabriqueSousTache
-hide FabriqueTache
-hide FabriqueTachePrimaire
-hide VueGantt
-hide Serializable
-hide Modele
-hide Sujet
-hide VueFormGantt
