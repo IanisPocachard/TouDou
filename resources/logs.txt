@@ -1,6 +1,0 @@
-2026-01-08T09:36:35.596031 - Tâche 'e' créée
-2026-01-08T09:36:37.222665 - La tâche 'e' a été déplacée dans la colonne En cours
-2026-01-08T09:36:37.732424 - La tâche 'e' a été déplacée dans la colonne A tester
-2026-01-08T09:37:07.928904 - La tâche 'e' a été déplacée dans la colonne En cours
-2026-01-08T09:37:08.370254 - La tâche 'e' a été déplacée dans la colonne A tester
-2026-01-08T09:37:08.843789 - La tâche 'e' a été déplacée dans la colonne Valide
