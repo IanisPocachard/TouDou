@@ -4,15 +4,15 @@ import controller.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Modele;
-import vue.VueBureau;
-import vue.VueFormGantt;
-import vue.VueHistorique;
-import vue.VueListe;
+import vue.*;
+import vue.contextmenu.ContextMenuListeTaches;
 
 public class Main extends Application {
 
@@ -85,6 +85,18 @@ public class Main extends Application {
 
         ControlBtnKanban ctrlKanban = new ControlBtnKanban(modele);
         btnKanban.setOnAction(ctrlKanban);
+
+        // #######################
+        // # MENU SUR CLIC DROIT #
+        // #######################
+        ContextMenuListeTaches contextMenuListeTaches = new ContextMenuListeTaches(modele, liste);
+
+        liste.setOnContextMenuRequested(event -> {
+            contextMenuListeTaches.show(liste, event.getScreenX(), event.getScreenY());
+        });
+
+        liste.setOnMousePressed(e -> contextMenuListeTaches.hide());
+
 
         // ##############################
         // # AJOUT DE TOUS LES ELEMENTS #

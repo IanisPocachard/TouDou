@@ -56,6 +56,10 @@ public class VueListe extends VBox implements Observateur {
 
     }
 
+    public TreeView<Tache> getTreeView() {
+        return treeView;
+    }
+
     private void buildVL() {
         setSpacing(10);
         setPadding(new Insets(10));
@@ -117,7 +121,7 @@ public class VueListe extends VBox implements Observateur {
 
         btnSupprimer.setOnAction(e -> {
             if (sujet instanceof Modele) {
-                new controleur.ControlSuppTache((Modele) sujet, treeView).handle(e);
+                new controleur.ControlSuppTache((Modele) sujet, this).handle(e);
             }
         });
 
@@ -158,7 +162,7 @@ public class VueListe extends VBox implements Observateur {
         // Archiver une tache
         btnArchiverTache.setOnAction(e -> {
             if (sujet instanceof Modele) {
-                new ControlAddArchive((Modele) sujet, treeView).handle(e);
+                new ControlAddArchive((Modele) sujet, this).handle(e);
             }
         });
 
