@@ -1,7 +1,10 @@
 package vue.contextmenu;
 
 import controleur.ControlSuppTache;
+<<<<<<< HEAD
 import controller.ControlAddArchive;
+=======
+>>>>>>> 590996b33e09ec2956c6e9ccf31b674ba33122ec
 import controller.ControlFormAddDependance;
 import controller.ControlFormAddSousTache;
 import controller.ControlFormAddTache;
