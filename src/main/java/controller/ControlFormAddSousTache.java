@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TreeView;
 import modele.Modele;
 import modele.Tache;
 import modele.TachePrimaire;
@@ -22,7 +23,8 @@ public class ControlFormAddSousTache implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        Tache tache = vueListe.getTacheSelectionnee();
+        TreeView<Tache> treeView = vueListe.getTreeView();
+        Tache tache = treeView.getSelectionModel().getSelectedItem().getValue();
         System.out.println(tache);
         if (tache instanceof TachePrimaire) {
             VueAjoutSousTache vue = new VueAjoutSousTache(modele, (TachePrimaire) tache);

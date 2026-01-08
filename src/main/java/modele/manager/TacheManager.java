@@ -111,14 +111,14 @@ public class TacheManager implements Manager {
     // ### DELETE ###
     // ##############
     @Override
-    public boolean delete(int index) {
-        if (index < 0 || index >= taches.size()) {
-            return false;
-        }
+    public boolean delete(Tache tache) {
+        if (tache == null) return false;
 
-        taches.remove(index);
-        sauvegarder();
-        return true;
+        boolean removed = taches.remove(tache);
+        if (removed) {
+            sauvegarder();
+        }
+        return removed;
     }
 
 }

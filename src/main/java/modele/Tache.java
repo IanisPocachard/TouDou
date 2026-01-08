@@ -2,6 +2,7 @@ package modele;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Tache implements Serializable {
 
@@ -79,6 +80,18 @@ public abstract class Tache implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tache)) return false;
+        Tache t = (Tache) o;
+        return id == t.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }

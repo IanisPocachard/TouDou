@@ -56,16 +56,8 @@ public class VueListe extends VBox implements Observateur {
 
     }
 
-    /**
-     * Retourne la tâche actuellement sélectionnée dans le TreeView.
-     * @return TachePrimaire sélectionnée, ou null si rien ou mauvaise sélection
-     */
-    public TachePrimaire getTacheSelectionnee() {
-        TreeItem<Tache> item = treeView.getSelectionModel().getSelectedItem();
-        if (item != null && item.getValue() instanceof TachePrimaire tp) {
-            return tp;
-        }
-        return null;
+    public TreeView<Tache> getTreeView() {
+        return treeView;
     }
 
     private void buildVL() {
@@ -129,7 +121,7 @@ public class VueListe extends VBox implements Observateur {
 
         btnSupprimer.setOnAction(e -> {
             if (sujet instanceof Modele) {
-                new controleur.ControlSuppTache((Modele) sujet, treeView).handle(e);
+                new controleur.ControlSuppTache((Modele) sujet, this).handle(e);
             }
         });
 

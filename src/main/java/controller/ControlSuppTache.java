@@ -9,21 +9,23 @@ import javafx.scene.control.TreeView;
 import modele.Modele;
 import modele.Tache;
 import modele.TachePrimaire;
+import vue.VueListe;
 
 import java.util.Optional;
 
 public class ControlSuppTache implements EventHandler<ActionEvent> {
 
     private Modele modele;
-    private TreeView<Tache> treeView;
+    private VueListe vueListe;
 
-    public ControlSuppTache(Modele modele, TreeView<Tache> treeView) {
+    public ControlSuppTache(Modele modele, VueListe vueListe) {
         this.modele = modele;
-        this.treeView = treeView;
+        this.vueListe = vueListe;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        TreeView<Tache> treeView = vueListe.getTreeView();
         TreeItem<Tache> itemSelectionne = treeView.getSelectionModel().getSelectedItem();
 
         if (itemSelectionne == null) {
@@ -52,12 +54,8 @@ public class ControlSuppTache implements EventHandler<ActionEvent> {
 
                 if (parentTache instanceof TachePrimaire) {
                     TachePrimaire parent = (TachePrimaire) parentTache;
+                    modele.supprimerSousTache(parent, tacheASupprimer);
 
-                    // on retire la sous-tâche de la liste des dépendances du parent
-                    parent.getDependances().remove(tacheASupprimer);
-
-                    // on force le rafraichissement car on a modifié un objet interne
-                    modele.notifierObservateurs();
                 }
             }
         }
