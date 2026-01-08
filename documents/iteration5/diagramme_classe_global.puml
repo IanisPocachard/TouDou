@@ -85,7 +85,6 @@ interface Manager {
 }
 
 class TacheManager implements Manager{
-    - taches : List<Tache>
     + sauvegarder()
     + saveChanges()
     + create(Tache)
@@ -98,7 +97,6 @@ class TacheManager implements Manager{
 
 class Modele implements Sujet{
     - observateurs : ArrayList<Observateur>
-    - taches : List<Tache>
     - manager : TacheManager
     - log : String
     + ajouterObservateur(Observateur)
@@ -157,7 +155,6 @@ class TachePrimaire extends Tache{
     + EN_COURS : static int
     + A_TESTER : static int
     + VALIDEE : static int
-    - dependances : List<Tache>
     + ajoutDependance(Tache)
     + parcoursCycle(Tache, Tache): boolean
     + parcoursCycleRecursif(Tache, Tache, List<Tache>)
@@ -271,5 +268,15 @@ Modele"1" <--- "*" ControlBtnArchives : modele
 Modele"1" <--- "*" ControlSuppTache : modele
 Modele"1" <--- "*" ControlValideSousTache : modele
 Modele"1" <--- "*" DragDropController: modele
+
+Modele"1" ---> "*" Tache: tache
+
+TacheManager "1" ---> "*" Tache: tache
+Modele "1" ---> "*" Tache: tache
+TachePrimaire "1" ---> "*" Tache: tache
+
+
+
+
 
 @enduml
