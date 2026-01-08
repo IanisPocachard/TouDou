@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Modele;
 import vue.*;
+import vue.contextmenu.ContextMenuListeTaches;
 
 public class Main extends Application {
 
@@ -88,23 +89,13 @@ public class Main extends Application {
         // #######################
         // # MENU SUR CLIC DROIT #
         // #######################
-        ContextMenu contextMenu = new ContextMenu();
-        MenuItem itemAjouterTache = new MenuItem("Ajouter une tâche");
-        MenuItem itemAjouterSousTache = new MenuItem("Ajouter une sous-tâche");
-        MenuItem itemAjouterDependance = new MenuItem("Ajouter une dépendance");
-        MenuItem itemArchiver = new MenuItem("Archiver la tâche");
-        MenuItem itemSupprimerTache = new MenuItem("Supprimer la tâche");
-
-        itemAjouterTache.setOnAction(new ControlFormAddTache(modele));
-        itemAjouterSousTache.setOnAction(new ControlFormAddSousTache(modele, liste.getTacheSelectionnee()));
-
-        contextMenu.getItems().addAll(itemAjouterTache, itemAjouterSousTache, itemAjouterDependance, itemArchiver, itemSupprimerTache);
+        ContextMenuListeTaches contextMenuListeTaches = new ContextMenuListeTaches(modele, liste);
 
         liste.setOnContextMenuRequested(event -> {
-            contextMenu.show(liste, event.getScreenX(), event.getScreenY());
+            contextMenuListeTaches.show(liste, event.getScreenX(), event.getScreenY());
         });
 
-        liste.setOnMousePressed(e -> contextMenu.hide());
+        liste.setOnMousePressed(e -> contextMenuListeTaches.hide());
 
 
         // ##############################
