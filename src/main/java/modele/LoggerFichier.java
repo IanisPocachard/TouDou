@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LoggerFichier {
 
@@ -14,7 +15,7 @@ public class LoggerFichier {
                 new FileWriter(FICHIER_LOG, true))) { // true = append
 
             writer.write(
-                    LocalDateTime.now() + " - " + message
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("[yyyy-MM-dd HH:mm:ss]")) + " - " + message
             );
             writer.newLine();
 
