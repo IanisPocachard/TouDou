@@ -1,0 +1,275 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+'Controlleur'
+
+class ControlAddArchive{
+    - treeView : TreeView<Tache>
+    + handle(ActionEvent)
+    + afficherAlerte(String, String)
+}
+
+class ControlAddDependances{
+    - tache1 : TachePrimaire
+    - cbTaches : ComboBox<Tache> cbTaches
+    - fenetre : Stage
+    + handle(ActionEvent)
+}
+
+class ControlAddSousTache{
+    - parent : TachePrimaire
+    - champNom : TextArea
+    - champDescrption : TextArea
+    - champDuree : TextField
+    - fenetre : Stage
+}
+
+class ControlAddTache{
+    - champNom : TextField
+    - champDescription : TextArea
+    - champDuree : TextField
+    - champDateDebut : DatePicker
+    - champDateFin : DatePicker
+    - fenetre : Stage
+    + handle(ActionEvent)
+}
+
+class ControlBtnArchives{
+    +handle(ActionEvent)
+}
+
+class ControlBtnKanbas{
+    + handle(ActionEvent)
+}
+
+class ControlBtnListeTaches{
+    + handle(ActionEvent)
+}
+
+class ControlSuppTache{
+    treeView : TreeView<Tache>
+    + handle(ActionEvent)
+    + afficherAlerte(String, String)
+
+}
+
+class ControlValideSousTache{
+    + executer(SousTache)
+}
+
+class DragDropController{
+    + makeDraggable(Label)
+    + makeDroppable(VBox, int)
+}
+
+class FabriqueSousTache implements FabriqueTache{
+    fab(String, String, int): Tache
+}
+
+interface FabriqueTache{
+    fab(String, String, int): Tache
+}
+
+class FabriqueTachePrimaire implements FabriqueTache{
+    fab(String, String, int): Tache
+    {static} personnaliser(TachePrimaire, Date, Date): TachePrimaire
+}
+
+interface Manager {
+    + create(Tache): void
+    + read(int): Tache
+    + readAll(): List<Tache>
+    + uodate(int, String, String, int) : boolean
+    + update(int, String, String, int, LocalDate, dateDebut, LocalDate) : boolean
+    + delete(int): boolean
+}
+
+class TacheManager implements Manager{
+    - taches : List<Tache>
+    + sauvegarder()
+    + saveChanges()
+    + create(Tache)
+    + read(int) : Tache
+    + readAll(): List<Tache>
+    + update(int, String, String, int): boolean
+    + update(int, String, String, int, LocalDate, LocalDate) : boolean
+    + delete(int): boolean
+}
+
+class Modele implements Sujet{
+    - observateurs : ArrayList<Observateur>
+    - taches : List<Tache>
+    - manager : TacheManager
+    - log : String
+    + ajouterObservateur(Observateur)
+    + retirerObservateur(Observateur)
+    + changerEtat(int, int)
+    + notifierObservateur()
+    + getTaches(): List<Tache>
+    + getTache(int): Tache
+    + ajouterTache(Tache)
+    + supprimerTache(Tache)
+    + getTachesArchivees(): ArrayList<Tache>
+    + archiverTache(TachePrimaire)
+    + logger(String)
+    + getLog(): String
+}
+
+class SousTache extends Tache{
+    - validee : boolean
+    + getValide(): boolean
+    + setEtat(int)
+    + toggleValide()
+    + toString(int): String
+}
+
+interface Sujet{
+    + ajouterObservateur(Observateur)
+    + retirerObservateur(Observateur)
+    + notifierObservateurs()
+}
+
+abstract class Tache implements Serializable{
+    - nom : String
+    - description : String
+    - duree : int
+    - id : int
+    - compteur : int
+    - dependances : ArrayList<Tache>
+    - serialVersionUID : long
+    + getNom(): String
+    + getDescription(): String
+    + getDuree(): int
+    + getId(): int
+    + toString(int): String
+    + toString(): String
+    + abstract getValide(): boolean
+    + setNom(String)
+    + setDescription(String)
+}
+
+class TachePrimaire extends Tache{
+    - dateDebut: LocalDate
+    - dateEcheance : LocalDate
+    - etat: int
+    - archivees : boolean
+    + A_FAIRE : static int
+    + EN_COURS : static int
+    + A_TESTER : static int
+    + VALIDEE : static int
+    - dependances : List<Tache>
+    + ajoutDependance(Tache)
+    + parcoursCycle(Tache, Tache): boolean
+    + parcoursCycleRecursif(Tache, Tache, List<Tache>)
+    + getDateDebut(): LocalDate
+    + getDateEcheance(): LocalDate
+    + getDependance(): List<Tache>
+    + getId(): int
+    + isArchivee(): boolean
+    + setArchivee(boolean)
+    + toString(): String
+    + toString(int): String
+    + setEtat(int)
+    + getEtat(int)
+    + archiver()
+    + getValide(): boolean
+    + setDateDebut(LocalDate)
+    + setDateEcheance(LocalDate)
+    + getNomEtat(int)
+}
+
+class TacheSerializer{
+    - chemin : String
+    - instance : TacheSerializer
+    + ecrireFichier(List<Tache)
+    + lireFichier(): List<Tache>
+}
+
+interface Observateur{
+    actualiser(Sujet): void
+}
+
+class VueAjoutDependance extends Stage{
+}
+
+class VueAjoutSousTache extends Stage{
+}
+
+class VueAjoutTache extends Stage{
+}
+
+class VueArchives extends Stage{
+}
+
+class VueBureau extends Hbox implements Observateur{
+    colToDo : VBox
+    colInProgress : VBox
+    colTesting : VBox
+    colDone : VBoxgi
+    cartes : List<Label>
+
+    initialiserColonne(): void
+    activerDragDropDesColonnes()
+    creerColonne(String, String): VBox
+    actualiser(Sujet): void
+    rafraichirTache(Modele): void
+    creerCarteTache(TachePrimaire): Label
+    viderContenuColonne(VBox): void
+}
+
+class VueFormGantt{
+    afficher(Modele) : void
+}
+
+class VueGantt{
+    afficher(List<Tache>) : void
+}
+
+class VueHistorique extends TextArea implements Observateur{
+    texte: String
+    actualiser(Sujet): void
+    ajouterLog(String): void
+}
+
+class VueListe extends VBox implements Observateur{
+    - root: TreeItem<Tache>
+    - treeView: TreeView<Tache>
+    - btnAjouterTache: Button
+    - btnAjouterSousTache: Button
+    - btnSupprimer: Button
+    - btnAjouterDependance: Button
+    + buildVl(): void
+    + actualiser(Sujet): void
+    + getSousTaches(TachePrimaire): List<Tache>
+    + getTreetView(): TreeView<Tache>
+}
+
+class LoggerFichier{
+    - FICHIER_LOG : String
+    + log(String)
+}
+
+
+
+VueGantt ..> Tache
+VueGantt ..> TachePrimaire
+VueFormGantt ..> VueGantt
+VueFormGantt ..> Modele
+
+
+Modele"1" <--- "*"VueBureau : modele
+Modele"1" <--- "*"VueHistorique : modele
+Modele"1" <--- "*"VueListe : modele
+
+Modele"1" <--- "*" ControlAddTache : modele
+Modele"1" <--- "*" ControlAddSousTache : modele
+Modele"1" <--- "*" ControlAddArchive : modele
+Modele"1" <--- "*" ControlAddDependances : modele
+Modele"1" <--- "*" ControlBtnListeTaches : modele
+Modele"1" <--- "*" ControlBtnKanbas : modele
+Modele"1" <--- "*" ControlBtnArchives : modele
+Modele"1" <--- "*" ControlSuppTache : modele
+Modele"1" <--- "*" ControlValideSousTache : modele
+Modele"1" <--- "*" DragDropController: modele
+
+@enduml
