@@ -31,16 +31,12 @@ public class TacheManager implements Manager {
     // ###################
     // ### PERSISTENCE ###
     // ###################
-    private void sauvegarder() {
+    public void sauvegarder() {
         try {
             TacheSerializer.ecrireFichier(taches);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void saveChanges() {
-        sauvegarder();
     }
 
     // ##############

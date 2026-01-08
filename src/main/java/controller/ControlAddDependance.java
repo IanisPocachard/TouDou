@@ -70,8 +70,7 @@ public class ControlAddDependance implements EventHandler<ActionEvent> {
                 throw new Exception("Dépendance invalide : la tâche dépendante commence avant la fin réelle de la tâche dont elle dépend.");
             }
 
-            tache1.ajoutDependance(tp2);
-            modele.notifierObservateurs();
+            modele.ajouterDependance(tache1, tp2);
             fenetre.close();
 
         } catch (Exception e) {

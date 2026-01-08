@@ -69,7 +69,7 @@ public class ControlAddSousTache implements EventHandler<ActionEvent> {
             }
 
             SousTache st = new SousTache(nom, description, dureeSousTache);
-            parent.ajoutDependance(st);
+            modele.ajouterSousTache(parent, st);
             fenetre.close();
 
             this.modele.logger("Sous-tache '" + st.getNom() + "' a été créée");

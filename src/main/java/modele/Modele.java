@@ -87,7 +87,7 @@ public class Modele implements Sujet {
 
     public void archiverTache(TachePrimaire t) {
         t.setArchivee(true);
-        this.manager.saveChanges();
+        this.manager.sauvegarder();
     }
 
     public void logger(String message) {
@@ -99,4 +99,21 @@ public class Modele implements Sujet {
     public String getLog() {
         return log;
     }
+
+    public void ajouterDependance(TachePrimaire source, TachePrimaire dependance) throws Exception {
+        if (source == null || dependance == null) return;
+
+        source.ajoutDependance(dependance);
+        manager.sauvegarder();
+        notifierObservateurs();
+    }
+
+    public void ajouterSousTache(TachePrimaire parent, SousTache sousTache) throws Exception {
+        if (parent == null || sousTache == null) return;
+
+        parent.ajoutDependance(sousTache);
+        manager.sauvegarder();
+        notifierObservateurs();
+    }
+
 }
