@@ -27,9 +27,7 @@ public class VueGantt {
 
         List<TachePrimaire> taches = new ArrayList<>();
         for (Tache t : selection) {
-            if (t instanceof TachePrimaire tp &&
-                    tp.getDateDebut() != null &&
-                    tp.getDateEcheance() != null) {
+            if (t instanceof TachePrimaire tp && tp.getDateDebut() != null && tp.getDateEcheance() != null) {
                 taches.add(tp);
             }
         }
@@ -43,8 +41,12 @@ public class VueGantt {
         LocalDate min = taches.get(0).getDateDebut();
         LocalDate max = taches.get(0).getDateEcheance();
         for (TachePrimaire tp : taches) {
-            if (tp.getDateDebut().isBefore(min)) min = tp.getDateDebut();
-            if (tp.getDateEcheance().isAfter(max)) max = tp.getDateEcheance();
+            if (tp.getDateDebut().isBefore(min)){
+                min = tp.getDateDebut();
+            }
+            if (tp.getDateEcheance().isAfter(max)){
+                max = tp.getDateEcheance();
+            }
         }
 
         int jours = (int) ChronoUnit.DAYS.between(min, max) + 1;
@@ -103,11 +105,11 @@ public class VueGantt {
             // couleur selon l'etat
             String couleur;
             switch (tp.getEtat()) {
-                case TachePrimaire.A_FAIRE -> couleur = "#FFC108";     // TO DO
-                case TachePrimaire.EN_COURS -> couleur = "#FF5A08";   // IN PROGRESS
-                case TachePrimaire.A_TESTER -> couleur = "#24739B";   // TESTING
+                case TachePrimaire.A_FAIRE -> couleur = "#FFC108"; // TO DO
+                case TachePrimaire.EN_COURS -> couleur = "#FF5A08"; // IN PROGRESS
+                case TachePrimaire.A_TESTER -> couleur = "#24739B"; // TESTING
                 case TachePrimaire.VALIDEE, TachePrimaire.ARCHIVEE -> couleur = "#36CBC1"; // DONE
-                default -> couleur = "#4f46e5";                       // bleu par défaut
+                default -> couleur = "#4f46e5"; // bleu par défaut
             }
             barre.setStyle("-fx-background-color: " + couleur + "; -fx-background-radius: 6;");
 
