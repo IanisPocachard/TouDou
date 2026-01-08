@@ -17,7 +17,6 @@ public class TachePrimaire extends Tache {
     public static final int EN_COURS=2;
     public static final int A_TESTER=3;
     public static final int VALIDEE=4;
-    public static final int ARCHIVEE=5;
 
     //Partie composite
     private List<Tache> dependances;
@@ -104,9 +103,6 @@ public class TachePrimaire extends Tache {
 
     public void setArchivee(boolean archivee) {
         this.archivee = archivee;
-        if (archivee) {
-            this.etat = ARCHIVEE;
-        }
     }
 
     public String toString(){
@@ -139,7 +135,7 @@ public class TachePrimaire extends Tache {
     }
 
     public void setEtat(int netat) throws Exception {
-        if (netat < 1 || netat > 5) { //si l'état n'es pas un état valide
+        if (netat < 1 || netat > 4) { //si l'état n'es pas un état valide
             throw new Exception("Etat invalide"); // on renvoie une erreur
         }
         if (netat == VALIDEE) { // si l'état est l'état VALIDEE
@@ -150,22 +146,10 @@ public class TachePrimaire extends Tache {
             }
         }
         this.etat = netat; // on prend l'état passé en parametre
-
-        if (this.etat == ARCHIVEE) {
-            this.archivee = true;
-        }
     }
 
     public int getEtat(){
         return this.etat;
-    }
-
-
-    public void archiver() throws Exception{
-        if(this.getEtat() == VALIDEE){
-            this.setEtat(ARCHIVEE);
-        }
-        else throw new Exception("Ne peut pas être archivée car n'est pas validée");
     }
 
     public boolean getValide(){
@@ -182,8 +166,6 @@ public class TachePrimaire extends Tache {
 
     public String getNomEtat(int etat){
         switch (etat) {
-            case ARCHIVEE:
-                return "Archivée";
             case VALIDEE:
                 return "Valide";
             case A_FAIRE:
